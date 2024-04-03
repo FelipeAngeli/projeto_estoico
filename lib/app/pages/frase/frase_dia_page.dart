@@ -5,6 +5,8 @@ import 'package:projeto_estoico/app/bloc/estoicismo_bloc.dart';
 import 'package:projeto_estoico/app/bloc/estoicismo_event.dart';
 import 'package:projeto_estoico/app/bloc/estoicismo_state.dart';
 import 'package:projeto_estoico/app/model/estoicimsmo_model.dart';
+import 'package:projeto_estoico/app/pages/frase/controller/frase_controller.dart';
+import 'package:projeto_estoico/app/utils/components/bottom_bar_custom.dart';
 
 class FraseDoDiaPage extends StatefulWidget {
   const FraseDoDiaPage({super.key});
@@ -14,12 +16,14 @@ class FraseDoDiaPage extends StatefulWidget {
 }
 
 class _FraseDoDiaPageState extends State<FraseDoDiaPage> {
+  final FraseDoDiaController controller = Modular.get<FraseDoDiaController>();
   final EstoicismoBloc estoicismoBloc = Modular.get<EstoicismoBloc>();
 
   @override
   void initState() {
     super.initState();
     estoicismoBloc.add(LoadEstoicismo());
+    controller.loadFrasesEstoicas();
   }
 
   @override
@@ -29,7 +33,7 @@ class _FraseDoDiaPageState extends State<FraseDoDiaPage> {
         title: const Text('Frase do Dia'),
       ),
       body: BlocConsumer<EstoicismoBloc, EstoicismoState>(
-        bloc: estoicismoBloc,
+        bloc: controller.bloc,
         listener: (context, state) {
           if (state is EstoicismoError) {
             ScaffoldMessenger.of(context).showSnackBar(
@@ -70,6 +74,7 @@ class _FraseDoDiaPageState extends State<FraseDoDiaPage> {
           }
         },
       ),
+      bottomNavigationBar: const BottomBarCustom(),
     );
   }
 }
