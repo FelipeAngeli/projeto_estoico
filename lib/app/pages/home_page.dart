@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:projeto_estoico/app/bloc/estoicismo_bloc.dart';
 import 'package:projeto_estoico/app/bloc/estoicismo_event.dart';
 import 'package:projeto_estoico/app/bloc/estoicismo_state.dart';
@@ -8,14 +9,16 @@ import 'package:projeto_estoico/app/model/estoicimsmo_model.dart';
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // Disparando o evento para carregar as frases estoicas assim que o widget é construído
-    context.read<EstoicismoBloc>().add(LoadEstoicismo());
+    final estoicismoBloc = Modular.get<EstoicismoBloc>();
+
+    estoicismoBloc.add(LoadEstoicismo());
 
     return Scaffold(
       appBar: AppBar(
         title: Text('Frases Estoicas'),
       ),
       body: BlocBuilder<EstoicismoBloc, EstoicismoState>(
+        bloc: estoicismoBloc,
         builder: (context, state) {
           if (state is EstoicismoLoading) {
             return Center(child: CircularProgressIndicator());
