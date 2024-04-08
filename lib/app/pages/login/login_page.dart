@@ -61,14 +61,12 @@ class _LoginPageState extends State<LoginPage> {
               label: "Email",
               validator: controller.validateUsername,
               onSaved: (value) => controller.username = value,
-              key: GlobalKey<FormState>(),
             ),
             const SizedBox(height: 16),
             PasswordFieldWidger(
               label: "Password",
               validator: controller.validatePassword,
               onSaved: (value) => controller.password = value,
-              key: GlobalKey<FormState>(),
             ),
             const SizedBox(height: 20),
             if (controller.isLoading)
@@ -99,10 +97,15 @@ class _LoginPageState extends State<LoginPage> {
               children: [
                 const Text("Não tem conta?"),
                 TextButton(
-                  onPressed: () => Modular.to.pushNamed('/register'),
-                  child: Text(
-                    "Crie a sua",
-                    style: TextStyle(color: CustomColor.verde),
+                  onPressed: () {
+                    Modular.to.pushNamed('/register');
+                  },
+                  child: Container(
+                    color: Colors.red,
+                    child: Text(
+                      "Crie a sua",
+                      style: TextStyle(color: CustomColor.verde),
+                    ),
                   ),
                 ),
               ],

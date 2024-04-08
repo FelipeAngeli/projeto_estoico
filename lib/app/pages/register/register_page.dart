@@ -19,12 +19,12 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
-    // final RegisterController controller = Modular.get<RegisterController>();
+    final RegisterController controller = Modular.get<RegisterController>();
 
-    late final controller = RegisterController(
-      onSucessLogin: () => Modular.to.pushNamed('/home'),
-      onUpDate: () => setState(() {}),
-    );
+    // late final controller = RegisterController(
+    //   onSucessLogin: () => Modular.to.pushNamed('/home'),
+    //   onUpDate: () => setState(() {}),
+    // );
 
     return BlocProvider<EstoicismoBloc>(
       create: (context) => controller.estoicismoBloc..add(LoadEstoicismo()),
@@ -65,7 +65,6 @@ class _RegisterPageState extends State<RegisterPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text("Email"),
             LoginTextFieldCustom(
               label: "Email",
               validator: controller.validateUsername,
@@ -77,6 +76,7 @@ class _RegisterPageState extends State<RegisterPage> {
               validator: controller.validatePassword,
               onSaved: (value) => controller.password = value,
             ),
+            const SizedBox(height: 16),
             PasswordFieldWidger(
               label: "Confirm Password",
               validator:
@@ -99,6 +99,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   if (_formKey.currentState!.validate()) {
                     _formKey.currentState!.save();
                     controller.register();
+                    Modular.to.pushNamed('/home');
                   }
                 },
                 child: const Padding(
