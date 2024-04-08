@@ -14,47 +14,56 @@ class LoginController {
   bool get isLoading => _isLoading;
   set isLoading(bool value) {
     _isLoading = value;
-    onUpDate!();
+    onUpDate?.call(); // Chama o callback se não for nulo
   }
 
   var _error = "";
   String get error => _error;
   set error(String value) {
     _error = value;
-    onUpDate!();
+    onUpDate?.call(); // Chama o callback se não for nulo
   }
 
   final formKey = GlobalKey<FormState>();
-  final VoidCallback? onSucessLogin;
-  final VoidCallback? onUpDate;
 
-  LoginController({
-    this.onSucessLogin,
-    this.onUpDate,
-  });
+  VoidCallback? onSucessLogin;
+  VoidCallback? onUpDate; // Removido o final para permitir reatribuição
+
+  LoginController({this.onSucessLogin, this.onUpDate});
 
   void loadFrasesEstoicas() {
     estoicismoBloc.add(LoadEstoicismo());
   }
 
-  void login() async {
+  Future<void> login() async {
+    if (!validate()) return; // Garante a validação antes de prosseguir
+
+    if (username == null || password == null) {
+      error = "Username e/ou senha não podem ser vazios.";
+      return;
+    }
+
     try {
       isLoading = true;
-      final response = await FirebaseAuth.instance.signInWithEmailAndPassword(email: username!, password: password!);
-      isLoading = false;
+      final response = await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: username!,
+        password: password!,
+      );
       if (response.user != null) {
-        onSucessLogin!();
+        onSucessLogin?.call();
+        Modular.to.pushNamed('/home');
       }
     } catch (e) {
+      error = "Não foi possível fazer o login: $e"; // Melhor detalhamento do erro
+    } finally {
       isLoading = false;
-      error = ("Não foi possível fazer o login");
     }
   }
 
   bool validate() {
     final form = formKey.currentState;
-    if (form!.validate()) {
-      form.save();
+    if (form?.validate() ?? false) {
+      form!.save();
       return true;
     }
     return false;
@@ -64,4 +73,10 @@ class LoginController {
 
   String? validatePassword(String? password) =>
       password != null && password.length >= 6 ? null : "A senha precisa ter no mínimo 6 caracteres";
+
+  void _notifyUpdate() {
+    if (onUpDate != null) {
+      onUpDate!();
+    }
+  }
 }

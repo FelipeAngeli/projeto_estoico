@@ -6,6 +6,7 @@ class LoginTextFieldCustom extends StatelessWidget {
   final Function(String?)? onSaved;
   final String? label;
   final IconData? icon;
+
   const LoginTextFieldCustom({super.key, this.validator, this.onSaved, this.label, this.icon});
 
   @override

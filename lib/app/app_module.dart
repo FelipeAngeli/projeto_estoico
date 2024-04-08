@@ -19,7 +19,10 @@ class AppModule extends Module {
     i.add<EstoicismoRepository>(EstoicismoRepository.new);
     i.add<EstoicismoBloc>(EstoicismoBloc.new);
     i.add<LoginController>(() => LoginController());
-    i.add<RegisterController>(() => RegisterController());
+    i.add<RegisterController>(() => RegisterController(
+          onSucessLogin: () => {},
+          onUpDate: () => {}, // Defina aqui o que você quer fazer no update
+        ));
     i.add<HomeController>(() => HomeController());
     i.add<FraseDoDiaController>(() => FraseDoDiaController());
   }
