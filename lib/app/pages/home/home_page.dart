@@ -7,6 +7,7 @@ import 'package:projeto_estoico/app/bloc/estoicismo_state.dart';
 import 'package:projeto_estoico/app/pages/home/controller/home_controller.dart';
 import 'package:projeto_estoico/app/utils/components/app_bar_custom.dart';
 import 'package:projeto_estoico/app/utils/components/bottom_bar_custom.dart';
+import 'package:projeto_estoico/app/utils/components/card_custom.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -39,9 +40,10 @@ class _HomePageState extends State<HomePage> {
               itemBuilder: (context, index) {
                 var frase = state.frases[index];
                 return ListTile(
-                  title: Text(frase.frase),
-                  subtitle: Text(frase.autor),
-                  // Aqui você pode adicionar a imagem do autor se disponível
+                  title: CardCustom(
+                    frase: frase.frase,
+                    autor: frase.autor,
+                  ),
                 );
               },
             );

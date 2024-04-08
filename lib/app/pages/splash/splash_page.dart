@@ -14,12 +14,12 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     super.initState();
-    _navigateToHome();
+    _navigateToLogin();
   }
 
-  _navigateToHome() async {
+  _navigateToLogin() async {
     await Future.delayed(const Duration(seconds: 3));
-    Modular.to.pushReplacementNamed('/home');
+    Modular.to.pushReplacementNamed('/login');
   }
 
   @override
