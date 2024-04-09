@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:projeto_estoico/app/bloc/estoicismo_bloc.dart';
-import 'package:projeto_estoico/app/bloc/estoicismo_event.dart';
+import 'package:projeto_estoico/app/bloc/estoicimsmo/estoicismo_bloc.dart';
+import 'package:projeto_estoico/app/bloc/estoicimsmo/estoicismo_event.dart';
 
 class LoginController {
   final EstoicismoBloc estoicismoBloc = Modular.get<EstoicismoBloc>();

@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
-import 'package:projeto_estoico/app/model/estoicimsmo_model.dart';
+import 'package:projeto_estoico/app/models/estoicimsmo_model.dart';
 
 class EstoicismoProvider {
   Future<List<EstoicismoModel>> loadFrasesEstoicas() async {

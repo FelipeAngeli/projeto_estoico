@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:projeto_estoico/app/bloc/estoicismo_bloc.dart';
-import 'package:projeto_estoico/app/bloc/estoicismo_event.dart';
-import 'package:projeto_estoico/app/bloc/estoicismo_state.dart';
-import 'package:projeto_estoico/app/model/estoicimsmo_model.dart';
+import 'package:projeto_estoico/app/bloc/estoicimsmo/estoicismo_bloc.dart';
+import 'package:projeto_estoico/app/bloc/estoicimsmo/estoicismo_event.dart';
+import 'package:projeto_estoico/app/bloc/estoicimsmo/estoicismo_state.dart';
+import 'package:projeto_estoico/app/models/estoicimsmo_model.dart';
 import 'package:projeto_estoico/app/pages/frase/controller/frase_controller.dart';
 import 'package:projeto_estoico/app/utils/components/app_bar_custom.dart';
 import 'package:projeto_estoico/app/utils/components/bottom_bar_custom.dart';

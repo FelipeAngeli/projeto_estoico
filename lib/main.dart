@@ -6,9 +6,9 @@ import 'package:projeto_estoico/app/app_widget.dart';
 import 'firebase_options.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized(); // Garante a inicialização dos bindings
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform, // Necessário para inicialização do Firebase
+    options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(ModularApp(
     module: AppModule(),

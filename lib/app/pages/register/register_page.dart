@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:projeto_estoico/app/bloc/estoicismo_bloc.dart';
-import 'package:projeto_estoico/app/bloc/estoicismo_event.dart';
-import 'package:projeto_estoico/app/bloc/estoicismo_state.dart';
+import 'package:projeto_estoico/app/bloc/estoicimsmo/estoicismo_bloc.dart';
+import 'package:projeto_estoico/app/bloc/estoicimsmo/estoicismo_event.dart';
+import 'package:projeto_estoico/app/bloc/estoicimsmo/estoicismo_state.dart';
 import 'package:projeto_estoico/app/pages/register/controller/register_controller.dart';
 import 'package:projeto_estoico/app/utils/components/login_txtfield_custom.dart';
 import 'package:projeto_estoico/app/utils/components/password_txtfild_custom.dart';

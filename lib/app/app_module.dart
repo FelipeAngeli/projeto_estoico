@@ -1,5 +1,6 @@
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:projeto_estoico/app/bloc/estoicismo_bloc.dart';
+import 'package:projeto_estoico/app/bloc/estoicimsmo/estoicismo_bloc.dart';
+import 'package:projeto_estoico/app/bloc/profile/profile_bloc.dart';
 import 'package:projeto_estoico/app/data/provider/estosicimo_provider.dart';
 import 'package:projeto_estoico/app/data/repository/estoicismo_repoitory.dart';
 import 'package:projeto_estoico/app/pages/frase/controller/frase_controller.dart';
@@ -8,6 +9,8 @@ import 'package:projeto_estoico/app/pages/home/controller/home_controller.dart';
 import 'package:projeto_estoico/app/pages/home/home_page.dart';
 import 'package:projeto_estoico/app/pages/login/controller/login_controller.dart';
 import 'package:projeto_estoico/app/pages/login/login_page.dart';
+import 'package:projeto_estoico/app/pages/perfil/controller/perfil_controller.dart';
+import 'package:projeto_estoico/app/pages/perfil/perfil_page.dart';
 import 'package:projeto_estoico/app/pages/register/controller/register_controller.dart';
 import 'package:projeto_estoico/app/pages/register/register_page.dart';
 import 'package:projeto_estoico/app/pages/splash/splash_page.dart';
@@ -25,6 +28,8 @@ class AppModule extends Module {
         ));
     i.add<HomeController>(() => HomeController());
     i.add<FraseDoDiaController>(() => FraseDoDiaController());
+    i.addLazySingleton<ProfileBloc>(() => ProfileBloc());
+    i.add<ProfileController>(() => ProfileController());
   }
 
   // final List<Bind> binds = [
@@ -40,5 +45,6 @@ class AppModule extends Module {
     r.child('/register', child: (context) => const RegisterPage());
     r.child('/home', child: (context) => const HomePage());
     r.child('/fraseDia', child: (context) => const FraseDoDiaPage());
+    r.child('/perfil', child: (context) => ProfilePage());
   }
 }

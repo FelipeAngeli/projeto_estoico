@@ -15,7 +15,7 @@ class _BottomBarCustomState extends State<BottomBarCustom> {
   final List<String> _routes = [
     '/home',
     '/fraseDia',
-    '/profile',
+    '/perfil',
   ];
   void _onItemTapped(int index) {
     setState(() {
@@ -26,25 +26,6 @@ class _BottomBarCustomState extends State<BottomBarCustom> {
 
   @override
   Widget build(BuildContext context) {
-    // return BottomSheet(
-    //   onClosing: () {},
-    //   builder: (context) {
-    //     return ClipRRect(
-    //       borderRadius: const BorderRadius.only(
-    //         topLeft: Radius.circular(32),
-    //         topRight: Radius.circular(32),
-    //       ),
-    //       child: Container(
-    //         decoration: BoxDecoration(
-    //           boxShadow: [
-    //             BoxShadow(
-    //               color: CustomColor.preto.withOpacity(0.2),
-    //               spreadRadius: 15,
-    //               blurRadius: 17,
-    //               offset: const Offset(10, 9), // changes position of shadow
-    //             ),
-    //           ],
-    //         ),
     return BottomNavigationBar(
       backgroundColor: CustomColor.backgroundColor,
       selectedItemColor: CustomColor.verde,
@@ -60,35 +41,11 @@ class _BottomBarCustomState extends State<BottomBarCustom> {
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.account_circle),
-          label: 'Profile',
+          label: 'Perfil',
         ),
       ],
       currentIndex: _selectedIndex, // Garanta que essa variável está definida em sua classe
       onTap: _onItemTapped, // E essa função também
-      //   ),
-      // ),
     );
-    //   },
-    // );
   }
 }
-  // return BottomNavigationBar(
-  //     backgroundColor: CustomColor.backgroundColor,
-  //     selectedItemColor: CustomColor.verde,
-  //     items: const <BottomNavigationBarItem>[
-  //       BottomNavigationBarItem(
-  //         icon: Icon(Icons.home),
-  //         label: 'Home',
-  //       ),
-  //       BottomNavigationBarItem(
-  //         icon: Icon(Icons.search),
-  //         label: 'Search',
-  //       ),
-  //       BottomNavigationBarItem(
-  //         icon: Icon(Icons.account_circle),
-  //         label: 'Profile',
-  //       ),
-  //     ],
-  //     currentIndex: _selectedIndex,
-  //     onTap: _onItemTapped,
-  //   );

@@ -1,5 +1,5 @@
 import 'package:projeto_estoico/app/data/provider/estosicimo_provider.dart';
-import 'package:projeto_estoico/app/model/estoicimsmo_model.dart';
+import 'package:projeto_estoico/app/models/estoicimsmo_model.dart';
 import 'package:projeto_estoico/app/utils/app_error.dart';
 
 class EstoicismoRepository {
