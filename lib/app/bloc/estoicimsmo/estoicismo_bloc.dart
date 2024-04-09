@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:projeto_estoico/app/bloc/estoicismo_event.dart';
-import 'package:projeto_estoico/app/bloc/estoicismo_state.dart';
+import 'package:projeto_estoico/app/bloc/estoicimsmo/estoicismo_event.dart';
+import 'package:projeto_estoico/app/bloc/estoicimsmo/estoicismo_state.dart';
 import 'package:projeto_estoico/app/data/repository/estoicismo_repoitory.dart';
 import 'package:projeto_estoico/app/utils/app_error.dart';
 
