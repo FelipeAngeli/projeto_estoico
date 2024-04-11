@@ -44,6 +44,7 @@ dependencies:
   firebase_analytics: ^10.10.0
   firebase_core: ^2.28.0
   activout_firebase_options_selector: ^1.0.0
+  shared_preferences: ^2.2.2
 
 dev_dependencies:
   flutter_test:

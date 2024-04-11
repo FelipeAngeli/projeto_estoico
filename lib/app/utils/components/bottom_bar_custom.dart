@@ -13,9 +13,9 @@ class _BottomBarCustomState extends State<BottomBarCustom> {
   int _selectedIndex = 0;
 
   final List<String> _routes = [
-    '/home',
+    '/search',
     '/fraseDia',
-    '/perfil',
+    '/profile',
   ];
   void _onItemTapped(int index) {
     setState(() {
@@ -32,11 +32,11 @@ class _BottomBarCustomState extends State<BottomBarCustom> {
       unselectedItemColor: Colors.grey,
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          label: 'Home',
+          icon: Icon(Icons.search),
+          label: 'Pesquisar Frases',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.search),
+          icon: Icon(Icons.menu_book_outlined),
           label: 'Frase do dia',
         ),
         BottomNavigationBarItem(

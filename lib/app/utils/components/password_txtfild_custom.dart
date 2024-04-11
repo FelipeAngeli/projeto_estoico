@@ -5,11 +5,13 @@ class PasswordFieldWidger extends StatefulWidget {
   final Function(String?)? onSaved;
   final String? Function(String?)? validator;
   final String? label;
+  final TextEditingController? controller;
   const PasswordFieldWidger({
     super.key,
     this.onSaved,
     this.validator,
     this.label,
+    this.controller,
   });
 
   @override
@@ -17,10 +19,11 @@ class PasswordFieldWidger extends StatefulWidget {
 }
 
 class _PasswordFieldWidgerState extends State<PasswordFieldWidger> {
-  bool _isObscure = false;
+  bool _isObscure = true;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: widget.controller,
       onSaved: widget.onSaved,
       obscureText: _isObscure,
       validator: widget.validator,

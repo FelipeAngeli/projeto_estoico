@@ -1,65 +1,99 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:projeto_estoico/app/bloc/estoicimsmo/estoicismo_bloc.dart';
-import 'package:projeto_estoico/app/bloc/estoicimsmo/estoicismo_event.dart';
+import 'package:flutter/widgets.dart';
 
 class RegisterController {
-  final formKey = GlobalKey<FormState>();
-  final VoidCallback onSucessLogin;
-  final VoidCallback onUpDate;
-  String? username;
-  String? password;
-  String? confirmPassword;
-  var _isLoading = false;
-  bool get isLoading => _isLoading;
-  set isLoading(bool value) {
-    _isLoading = value;
-    onUpDate();
-  }
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmPasswordController = TextEditingController();
 
-  RegisterController({required this.onSucessLogin, required this.onUpDate});
+  Future<void> register() async {
+    if (passwordController.text != confirmPasswordController.text) {
+      // Senhas não coincidem
+      print('As senhas não coincidem.'); // Aqui, considere uma melhor forma de feedback para o usuário
+      return;
+    }
 
-  var _error = "";
-  String get error => _error;
-  set error(String value) {
-    _error = value;
-    onUpDate();
-  }
-
-  final EstoicismoBloc estoicismoBloc = Modular.get<EstoicismoBloc>();
-
-  void loadFrasesEstoicas() {
-    estoicismoBloc.add(LoadEstoicismo());
-  }
-
-  void register() async {
     try {
-      isLoading = true;
-      final response =
-          await FirebaseAuth.instance.createUserWithEmailAndPassword(email: username!, password: password!);
-      isLoading = false;
-      if (response.user != null) {
-        onSucessLogin();
-      }
+      // Tenta criar um novo usuário com email e senha
+      await _auth.createUserWithEmailAndPassword(
+        email: emailController.text,
+        password: passwordController.text,
+      );
+      // Se sucesso, navega para a tela principal
+      Modular.to.pushNamed('/search');
     } catch (e) {
-      isLoading = false;
-      error = ("Não foi possível fazer o login");
+      // Caso ocorra algum erro durante o registro, trate aqui
+      print(e.toString()); // Considere usar um mecanismo mais robusto para mostrar o erro ao usuário
     }
   }
 
-  bool validate() {
-    final form = formKey.currentState;
-    if (form!.validate()) {
-      form.save();
-      return true;
-    }
-    return false;
+  void dispose() {
+    // Garante a limpeza dos controllers quando o objeto é descartado
+    emailController.dispose();
+    passwordController.dispose();
+    confirmPasswordController.dispose();
   }
-
-  String? validateUsername(String? username) => username != null && username.isNotEmpty ? null : "Campo obrigatório";
-  String? validatePassword(String? password) =>
-      password != null && password.length >= 6 ? null : "A senha deve ter no mínimo 6 caracteres";
-  String? validateConfirmPassword(String? confirmPassword) =>
-      confirmPassword != null && confirmPassword == password ? null : "As senhas não conferem";
 }
+
+// class RegisterController {
+//   final formKey = GlobalKey<FormState>();
+//   final VoidCallback onSucessLogin;
+//   final VoidCallback onUpDate;
+//   String? eamilLogin;
+//   String? password;
+//   String? confirmPassword;
+//   var _isLoading = false;
+//   bool get isLoading => _isLoading;
+//   set isLoading(bool value) {
+//     _isLoading = value;
+//     onUpDate();
+//   }
+
+//   RegisterController({required this.onSucessLogin, required this.onUpDate});
+
+//   var _error = "";
+//   String get error => _error;
+//   set error(String value) {
+//     _error = value;
+//     onUpDate();
+//   }
+
+//   final SearchBloc searchBloc = Modular.get<SearchBloc>();
+
+//   void loadFrasesEstoicas() {
+//     // searchBloc.add((SearchLoading()));
+//   }
+
+//   void register() async {
+//     try {
+//       isLoading = true;
+//       final response =
+//           await FirebaseAuth.instance.createUserWithEmailAndPassword(email: eamilLogin!, password: password!);
+//       isLoading = false;
+//       if (response.user != null) {
+//         onSucessLogin();
+//       }
+//     } catch (e) {
+//       isLoading = false;
+//       error = ("Não foi possível fazer o login");
+//     }
+//   }
+
+//   bool validate() {
+//     final form = formKey.currentState;
+//     if (form!.validate()) {
+//       form.save();
+//       return true;
+//     }
+//     return false;
+//   }
+
+//   String? validateUsername(String? username) => username != null && username.isNotEmpty ? null : "Campo obrigatório";
+//   String? validatePassword(String? password) =>
+//       password != null && password.length >= 6 ? null : "A senha deve ter no mínimo 6 caracteres";
+//   String? validateConfirmPassword(String? confirmPassword) =>
+//       confirmPassword != null && confirmPassword == password ? null : "As senhas não conferem";
+// }

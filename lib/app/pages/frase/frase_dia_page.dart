@@ -1,95 +1,97 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:projeto_estoico/app/bloc/estoicimsmo/estoicismo_bloc.dart';
-import 'package:projeto_estoico/app/bloc/estoicimsmo/estoicismo_event.dart';
-import 'package:projeto_estoico/app/bloc/estoicimsmo/estoicismo_state.dart';
-import 'package:projeto_estoico/app/models/estoicimsmo_model.dart';
+
+import 'package:projeto_estoico/app/bloc/frasedodia/frasedodia_bloc.dart';
+import 'package:projeto_estoico/app/bloc/frasedodia/frasedodia_events.dart';
+import 'package:projeto_estoico/app/bloc/frasedodia/frasedodia_states.dart';
+
 import 'package:projeto_estoico/app/pages/frase/controller/frase_controller.dart';
 import 'package:projeto_estoico/app/utils/components/app_bar_custom.dart';
 import 'package:projeto_estoico/app/utils/components/bottom_bar_custom.dart';
-import 'package:projeto_estoico/app/utils/components/card_frase_dia_custom.dart';
+import 'package:projeto_estoico/app/utils/custom_color.dart';
 
-class FraseDoDiaPage extends StatefulWidget {
-  const FraseDoDiaPage({super.key});
+class FrasesDoDiaPage extends StatefulWidget {
+  const FrasesDoDiaPage({super.key});
 
   @override
-  _FraseDoDiaPageState createState() => _FraseDoDiaPageState();
+  _FrasesDoDiaPageState createState() => _FrasesDoDiaPageState();
 }
 
-class _FraseDoDiaPageState extends State<FraseDoDiaPage> {
-  final FraseDoDiaController controller = Modular.get<FraseDoDiaController>();
-  final EstoicismoBloc estoicismoBloc = Modular.get<EstoicismoBloc>();
+class _FrasesDoDiaPageState extends State<FrasesDoDiaPage> {
+  late FrasesDoDiaController controller;
+  late FraseDoDiaBloc fraseDoDiaBloc;
+  bool _isFraseSalva = false; // Mantenha esta definição
 
   @override
   void initState() {
     super.initState();
-    estoicismoBloc.add(LoadEstoicismo());
-    controller.loadFrasesEstoicas();
+    fraseDoDiaBloc = Modular.get<FraseDoDiaBloc>();
+    controller = FrasesDoDiaController(estoicismoBloc: fraseDoDiaBloc);
+    fraseDoDiaBloc.add(FetchFraseDoDia());
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(
+      appBar: CustomAppBar(
+        title: 'Frase do Dia',
         actions: [
-          IconButton(
-            icon: Icon(Icons.favorite),
-            onPressed: null,
-          ),
-          IconButton(
-            icon: Icon(Icons.share),
-            onPressed: null,
+          BlocBuilder<FraseDoDiaBloc, FraseDoDiaState>(
+            bloc: fraseDoDiaBloc,
+            builder: (context, state) {
+              if (state is FraseDoDiaLoaded) {
+                return IconButton(
+                  icon: Icon(
+                    _isFraseSalva ? Icons.favorite : Icons.favorite_border,
+                    color: _isFraseSalva ? Colors.red : CustomColor.verde,
+                    size: 24,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      _isFraseSalva = !_isFraseSalva;
+                      if (_isFraseSalva) {
+                        controller.salvarFrase(state.fraseDoDia);
+                      }
+                    });
+                  },
+                );
+              }
+              return Container();
+            },
           ),
         ],
       ),
-      body: BlocConsumer<EstoicismoBloc, EstoicismoState>(
-        bloc: controller.bloc,
-        listener: (context, state) {
-          if (state is EstoicismoError) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.message)),
-            );
-          }
-        },
+      body: BlocBuilder<FraseDoDiaBloc, FraseDoDiaState>(
+        bloc: fraseDoDiaBloc,
         builder: (context, state) {
-          if (state is EstoicismoLoaded) {
-            int diaDoAno = DateTime.now().difference(DateTime(DateTime.now().year, 1, 1)).inDays;
-            EstoicismoModel fraseDoDia = state.frases[diaDoAno % state.frases.length];
-
-            return Padding(
-              padding: const EdgeInsets.all(24.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CardFraseDiaCustom(
-                    frase: fraseDoDia.frase,
-                    autor: fraseDoDia.autor,
-                  ),
-                  // Text(
-                  //   fraseDoDia.frase,
-                  //   style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                  //   textAlign: TextAlign.center,
-                  // ),
-                  // const SizedBox(height: 20),
-                  // Text(
-                  //   fraseDoDia.autor,
-                  //   style: const TextStyle(fontSize: 20, fontStyle: FontStyle.italic),
-                  //   textAlign: TextAlign.center,
-                  // ),
-                  // Aqui você pode adicionar a imagem do autor se disponível
-                ],
-              ),
-            );
-          } else if (state is EstoicismoLoading) {
+          if (state is FraseDoDiaLoading) {
             return const Center(child: CircularProgressIndicator());
-          } else {
-            // Inclui tanto EstoicismoError quanto o estado inicial/desconhecido
-            return const Center(child: Text('Nenhuma frase disponível.'));
           }
+          if (state is FraseDoDiaLoaded) {
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              child: _buildLoadedState(state),
+            );
+          }
+          if (state is FraseDoDiaError) {
+            return Center(child: Text(state.message));
+          }
+          return const Center(child: Text('Nenhuma frase disponível'));
         },
       ),
       bottomNavigationBar: const BottomBarCustom(),
+    );
+  }
+
+  Widget _buildLoadedState(FraseDoDiaLoaded state) {
+    return Center(
+      child: Column(
+        children: [
+          Text(state.fraseDoDia.frase),
+          Text(state.fraseDoDia.autor),
+        ],
+      ),
     );
   }
 }

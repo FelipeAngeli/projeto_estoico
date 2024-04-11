@@ -6,12 +6,21 @@ class LoginTextFieldCustom extends StatelessWidget {
   final Function(String?)? onSaved;
   final String? label;
   final IconData? icon;
+  final TextEditingController? controller;
 
-  const LoginTextFieldCustom({super.key, this.validator, this.onSaved, this.label, this.icon});
+  const LoginTextFieldCustom({
+    super.key,
+    this.validator,
+    this.onSaved,
+    this.label,
+    this.icon,
+    this.controller,
+  });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: controller,
       validator: validator,
       onSaved: onSaved,
       keyboardType: TextInputType.emailAddress,

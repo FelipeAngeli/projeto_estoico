@@ -7,9 +7,14 @@ class EstoicismoRepository {
 
   EstoicismoRepository(this.provider);
 
-  Future<List<EstoicismoModel>> getFrasesEstoicas() async {
+  Future<List<EstoicismoModel>> getFrasesEstoicas({String query = ''}) async {
     try {
-      return await provider.loadFrasesEstoicas();
+      final frases = await provider.loadFrasesEstoicas();
+      if (query.isEmpty) {
+        return frases;
+      } else {
+        return frases.where((frase) => frase.frase.toLowerCase().contains(query.toLowerCase())).toList();
+      }
     } catch (e) {
       throw AppError(message: 'Falha ao carregar as frases estoicas', code: ErrorCode.network);
     }

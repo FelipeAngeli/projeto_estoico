@@ -11,6 +11,15 @@ class ProfileLoaded extends ProfileState {
   ProfileLoaded(this.user);
 }
 
+class FrasesLoading extends ProfileState {}
+
+class FrasesLoaded extends ProfileState {
+  final List<String> frases;
+  FrasesLoaded(this.frases);
+}
+
+class NoFrasesSaved extends ProfileState {}
+
 class ProfileError extends ProfileState {
   final String message;
   ProfileError(this.message);
