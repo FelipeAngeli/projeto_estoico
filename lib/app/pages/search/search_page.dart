@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:projeto_estoico/app/bloc/search/search_bloc.dart';
-import 'package:projeto_estoico/app/bloc/search/search_event.dart';
 import 'package:projeto_estoico/app/bloc/search/search_state.dart';
 import 'package:projeto_estoico/app/utils/components/app_bar_custom.dart';
 import 'package:projeto_estoico/app/utils/components/bottom_bar_custom.dart';
@@ -23,62 +22,55 @@ class _SearchPageState extends State<SearchPage> {
   @override
   void initState() {
     super.initState();
-    // Inicialização do SearchController com Modular.get para obter uma instância de SearchBloc
     controller = search_ctrl.SearchController(Modular.get<SearchBloc>());
+    print('SearchPage inicializada.');
   }
 
   @override
   void dispose() {
-    // Garante que o controller seja descartado corretamente
     controller.dispose();
+    print('SearchPage descartada.');
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(title: "Pesquise pela frase"),
+      appBar: const CustomAppBar(
+        title: "Pesquise pela frase",
+      ),
       body: Column(
         children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: controller.searchController,
-                    decoration: InputDecoration(
-                      labelText: "Pesquisar",
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(25.0),
-                        borderSide: BorderSide(color: CustomColor.verde),
-                      ),
-                    ),
-                  ),
-                ),
-                IconButton(
-                  icon: Icon(Icons.search),
+            child: TextField(
+              controller: controller.searchController,
+              decoration: InputDecoration(
+                labelText: "Pesquisar",
+                suffixIcon: IconButton(
+                  icon: const Icon(Icons.search),
                   onPressed: () {
-                    // Inicia a pesquisa diretamente pelo SearchBloc
-                    controller.searchBloc.add(StartSearch(controller.searchController.text));
+                    print('Botão de busca pressionado.');
+                    controller.search();
+                    controller.searchController.clear();
                   },
-                )
-              ],
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(25.0),
+                  borderSide: BorderSide(color: CustomColor.verde),
+                ),
+              ),
             ),
           ),
           Expanded(
             child: BlocBuilder<SearchBloc, SearchState>(
               bloc: controller.searchBloc,
               builder: (context, state) {
-                if (state is SearchLoaded) {
-                  if (state.frases.isEmpty) {
-                    return Center(
-                      child: Text(
-                        'Nenhuma frase encontrada.',
-                        style: TextStyle(color: CustomColor.verde),
-                      ),
-                    );
-                  }
+                if (state is SearchLoading) {
+                  print('Carregando...');
+                  return const Center(child: CircularProgressIndicator());
+                } else if (state is SearchLoaded) {
+                  print('Frases carregadas: ${state.frases.length}');
                   return ListView.builder(
                     itemCount: state.frases.length,
                     itemBuilder: (context, index) {
@@ -91,8 +83,25 @@ class _SearchPageState extends State<SearchPage> {
                       );
                     },
                   );
+                } else if (state is SearchError) {
+                  print('Erro: ${state.message}');
+                  return Center(
+                    child: Text(
+                      state.message,
+                      style: TextStyle(color: CustomColor.verde),
+                    ),
+                  );
+                } else if (state is SearchInitial || state is SearchEmpty) {
+                  print('Nenhum resultado encontrado ou estado inicial.');
+                  return Center(
+                    child: Text(
+                      'Digite algo para iniciar a busca.',
+                      style: TextStyle(color: CustomColor.verde),
+                    ),
+                  );
                 }
-                return Container();
+                print('Estado desconhecido.');
+                return const Center(child: Text('Estado desconhecido'));
               },
             ),
           ),
@@ -102,7 +111,6 @@ class _SearchPageState extends State<SearchPage> {
     );
   }
 }
-
 // class SearchPage extends StatefulWidget {
 //   const SearchPage({Key? key}) : super(key: key);
 
@@ -112,7 +120,6 @@ class _SearchPageState extends State<SearchPage> {
 
 // class _SearchPageState extends State<SearchPage> {
 //   late final search_ctrl.SearchController controller;
-//   // TextEditingController _controller = TextEditingController();
 
 //   @override
 //   void initState() {
@@ -122,108 +129,7 @@ class _SearchPageState extends State<SearchPage> {
 
 //   @override
 //   void dispose() {
-//     //  _controller.dispose();
 //     controller.dispose();
-//     super.dispose();
-//   }
-
-//   // void _onSearch() {
-//   //   // Chama o método de busca usando o valor atual do controller.searchController
-//   //   controller.searchBloc.add(StartSearch(controller.searchController.text));
-//   // }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: const CustomAppBar(title: "Pesquise pela frase"),
-//       body: Column(
-//         children: [
-//           Padding(
-//             padding: const EdgeInsets.all(8.0),
-//             child: Row(
-//               children: [
-//                 Expanded(
-//                   child: TextField(
-//                     controller: controller.searchController,
-//                     // controller: _controller,
-//                     decoration: InputDecoration(
-//                       labelText: "Pesquisar",
-//                       border: OutlineInputBorder(
-//                         borderRadius: BorderRadius.circular(25.0),
-//                         borderSide: BorderSide(color: CustomColor.verde),
-//                       ),
-//                     ),
-//                   ),
-//                 ),
-//                 IconButton(
-//                   icon: Icon(Icons.search),
-//                   onPressed: () {
-//                     // Aqui você chama diretamente o SearchBloc para adicionar o evento de início da pesquisa.
-//                     // Isso permite iniciar a pesquisa explicitamente, independentemente da mudança de texto.
-//                     controller.searchBloc.add(StartSearch(controller.searchController.text));
-//                   },
-//                 )
-//               ],
-//             ),
-//           ),
-//           Expanded(
-//             child: BlocBuilder<SearchBloc, SearchState>(
-//               bloc: controller.searchBloc,
-//               builder: (context, state) {
-//                 if (state is SearchLoaded) {
-//                   if (state.frases.isEmpty) {
-//                     return Center(
-//                       child: Text(
-//                         'Nenhuma frase encontrada.',
-//                         style: TextStyle(color: CustomColor.verde),
-//                       ),
-//                     );
-//                   }
-//                   return ListView.builder(
-//                     itemCount: state.frases.length,
-//                     itemBuilder: (context, index) {
-//                       var frase = state.frases[index];
-//                       return ListTile(
-//                         title: CardCustom(
-//                           frase: frase.frase,
-//                           autor: frase.autor,
-//                         ),
-//                       );
-//                     },
-//                   );
-//                 }
-//                 return Container();
-//               },
-//             ),
-//           ),
-//         ],
-//       ),
-//       bottomNavigationBar: const BottomBarCustom(),
-//     );
-//   }
-// }
-
-
-// class SearchPage extends StatefulWidget {
-//   const SearchPage({Key? key}) : super(key: key);
-
-//   @override
-//   _SearchPageState createState() => _SearchPageState();
-// }
-
-// class _SearchPageState extends State<SearchPage> {
-//   late final search_ctrl.SearchController controller;
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     // controller = SearchController(); // Inicializa o controller
-//     controller = search_ctrl.SearchController(Modular.get<SearchBloc>());
-//   }
-
-//   @override
-//   void dispose() {
-//     controller.dispose(); // Libera recursos quando a página é fechada
 //     super.dispose();
 //   }
 
@@ -237,12 +143,9 @@ class _SearchPageState extends State<SearchPage> {
 //         bloc: controller.searchBloc,
 //         builder: (context, state) {
 //           if (state is SearchLoading) {
-//             // Exibindo um indicador de carregamento enquanto a busca está sendo realizada
 //             return const Center(child: CircularProgressIndicator());
 //           } else if (state is SearchLoaded) {
-//             // Exibindo os resultados da busca
 //             if (state.frases.isEmpty) {
-//               // Caso não haja resultados para a busca
 //               return Center(
 //                 child: Text(
 //                   'Nenhuma frase encontrada.',
@@ -263,7 +166,6 @@ class _SearchPageState extends State<SearchPage> {
 //               },
 //             );
 //           } else if (state is SearchError) {
-//             // Exibindo uma mensagem de erro caso algo dê errado durante a busca
 //             return Center(
 //               child: Text(
 //                 state.message,
@@ -271,7 +173,6 @@ class _SearchPageState extends State<SearchPage> {
 //               ),
 //             );
 //           } else if (state is SearchInitial) {
-//             // Estado inicial ou quando o usuário não digitou nada ainda
 //             return Column(
 //               children: [
 //                 Padding(

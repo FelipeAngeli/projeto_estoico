@@ -8,26 +8,53 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
 
   SearchBloc(this.repository) : super(SearchInitial()) {
     on<StartSearch>(_onStartSearch);
-    // Registrar o manipulador para SearchTextChanged
-    on<SearchTextChanged>(_onSearchTextChanged);
   }
 
-  void _onStartSearch(StartSearch event, Emitter<SearchState> emit) async {
+  Future<void> _onStartSearch(StartSearch event, Emitter<SearchState> emit) async {
+    print('Iniciando busca por: ${event.query}');
     emit(SearchLoading());
     try {
       final frases = await repository.getFrasesEstoicas(query: event.query);
       if (frases.isEmpty) {
         emit(SearchEmpty());
+        print('Nenhuma frase encontrada para a busca.');
       } else {
         emit(SearchLoaded(frases));
+        print('Busca concluída com sucesso, frases carregadas: ${frases.length}');
       }
-    } catch (e) {
-      emit(SearchError("Erro ao buscar frases"));
+    } catch (error) {
+      emit(SearchError(error.toString()));
+      print('Erro na busca: ${error.toString()}');
     }
   }
-
-  // Definir o manipulador para SearchTextChanged
-  void _onSearchTextChanged(SearchTextChanged event, Emitter<SearchState> emit) async {
-    // Sua lógica para tratar o evento SearchTextChanged aqui
-  }
 }
+
+// class SearchBloc extends Bloc<SearchEvent, SearchState> {
+//   final EstoicismoRepository repository;
+//   String currentQuery = '';
+
+//   SearchBloc(this.repository) : super(SearchInitial()) {
+//     on<StartSearch>(_onStartSearch);
+//     on<SearchTextChanged>(_onSearchTextChanged);
+//   }
+
+//   void _onStartSearch(StartSearch event, Emitter<SearchState> emit) async {
+//     emit(SearchLoading());
+//     try {
+//       final frases = await repository.getFrasesEstoicas(query: event.query);
+//       if (frases.isEmpty) {
+//         emit(SearchEmpty());
+//         currentQuery = event.query;
+//       } else {
+//         emit(SearchLoaded(frases));
+//       }
+//     } catch (e) {
+//       emit(SearchError("Erro ao buscar frases"));
+//     }
+//   }
+
+//   // Definir o manipulador para SearchTextChanged
+//   void _onSearchTextChanged(SearchTextChanged event, Emitter<SearchState> emit) async {
+//     // Sua lógica para tratar o evento SearchTextChanged aqui
+//   }
+// }

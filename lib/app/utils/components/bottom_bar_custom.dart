@@ -17,11 +17,16 @@ class _BottomBarCustomState extends State<BottomBarCustom> {
     '/fraseDia',
     '/profile',
   ];
+
   void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-    Modular.to.navigate(_routes[index]);
+    if (_selectedIndex != index) {
+      setState(() {
+        _selectedIndex = index;
+      });
+      // const Duration(milliseconds: 200);
+      // Curves.easeInOut;
+      Modular.to.navigate(_routes[index]);
+    }
   }
 
   @override
@@ -30,7 +35,10 @@ class _BottomBarCustomState extends State<BottomBarCustom> {
       backgroundColor: CustomColor.backgroundColor,
       selectedItemColor: CustomColor.verde,
       unselectedItemColor: Colors.grey,
-      items: const <BottomNavigationBarItem>[
+      currentIndex: _selectedIndex,
+      onTap: _onItemTapped,
+      type: BottomNavigationBarType.fixed,
+      items: const [
         BottomNavigationBarItem(
           icon: Icon(Icons.search),
           label: 'Pesquisar Frases',
@@ -44,8 +52,6 @@ class _BottomBarCustomState extends State<BottomBarCustom> {
           label: 'Perfil',
         ),
       ],
-      currentIndex: _selectedIndex, // Garanta que essa variável está definida em sua classe
-      onTap: _onItemTapped, // E essa função também
     );
   }
 }

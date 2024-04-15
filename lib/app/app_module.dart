@@ -37,7 +37,10 @@ class AppModule extends Module {
     //bloc
     i.add<LoginBloc>(LoginBloc.new);
     i.add<ProfileBloc>(ProfileBloc.new);
-    i.add<SearchBloc>(SearchBloc.new);
+    i.add<SearchBloc>(() => SearchBloc(
+          Modular.get<EstoicismoRepository>(),
+        ));
+
     i.add<FraseDoDiaBloc>(FraseDoDiaBloc.new);
 
     // Controllers
