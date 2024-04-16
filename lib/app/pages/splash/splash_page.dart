@@ -20,7 +20,7 @@ class _SplashPageState extends State<SplashPage> {
   _navigateToLogin() async {
     await Future.delayed(const Duration(seconds: 3));
 
-    Modular.to.pushReplacementNamed('/search');
+    Modular.to.pushReplacementNamed('/login');
   }
 
   @override

@@ -9,6 +9,7 @@ import 'package:projeto_estoico/app/bloc/frasedodia/frasedodia_states.dart';
 import 'package:projeto_estoico/app/pages/frase/controller/frase_controller.dart';
 import 'package:projeto_estoico/app/utils/components/app_bar_custom.dart';
 import 'package:projeto_estoico/app/utils/components/bottom_bar_custom.dart';
+import 'package:projeto_estoico/app/utils/components/card_frase_dia_custom.dart';
 import 'package:projeto_estoico/app/utils/custom_color.dart';
 
 class FrasesDoDiaPage extends StatefulWidget {
@@ -85,13 +86,14 @@ class _FrasesDoDiaPageState extends State<FrasesDoDiaPage> {
   }
 
   Widget _buildLoadedState(FraseDoDiaLoaded state) {
-    return Center(
-      child: Column(
+    return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text(state.fraseDoDia.frase),
-          Text(state.fraseDoDia.autor),
-        ],
-      ),
-    );
+          CardFraseDiaCustom(
+            frase: state.fraseDoDia.frase,
+            autor: state.fraseDoDia.autor,
+          ),
+        ]);
   }
 }

@@ -10,9 +10,10 @@ import 'package:projeto_estoico/app/utils/custom_color.dart';
 import 'package:projeto_estoico/app/pages/search/controller/search_controller.dart' as search_ctrl;
 
 class SearchPage extends StatefulWidget {
-  const SearchPage({Key? key}) : super(key: key);
+  const SearchPage({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _SearchPageState createState() => _SearchPageState();
 }
 
@@ -111,128 +112,3 @@ class _SearchPageState extends State<SearchPage> {
     );
   }
 }
-// class SearchPage extends StatefulWidget {
-//   const SearchPage({Key? key}) : super(key: key);
-
-//   @override
-//   _SearchPageState createState() => _SearchPageState();
-// }
-
-// class _SearchPageState extends State<SearchPage> {
-//   late final search_ctrl.SearchController controller;
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     controller = search_ctrl.SearchController(Modular.get<SearchBloc>());
-//   }
-
-//   @override
-//   void dispose() {
-//     controller.dispose();
-//     super.dispose();
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: const CustomAppBar(
-//         title: "Pesquise pela frase",
-//       ),
-//       body: BlocBuilder<SearchBloc, SearchState>(
-//         bloc: controller.searchBloc,
-//         builder: (context, state) {
-//           if (state is SearchLoading) {
-//             return const Center(child: CircularProgressIndicator());
-//           } else if (state is SearchLoaded) {
-//             if (state.frases.isEmpty) {
-//               return Center(
-//                 child: Text(
-//                   'Nenhuma frase encontrada.',
-//                   style: TextStyle(color: CustomColor.verde),
-//                 ),
-//               );
-//             }
-//             return ListView.builder(
-//               itemCount: state.frases.length,
-//               itemBuilder: (context, index) {
-//                 var frase = state.frases[index];
-//                 return ListTile(
-//                   title: CardCustom(
-//                     frase: frase.frase,
-//                     autor: frase.autor,
-//                   ),
-//                 );
-//               },
-//             );
-//           } else if (state is SearchError) {
-//             return Center(
-//               child: Text(
-//                 state.message,
-//                 style: TextStyle(color: CustomColor.verde),
-//               ),
-//             );
-//           } else if (state is SearchInitial) {
-//             return Column(
-//               children: [
-//                 Padding(
-//                   padding: const EdgeInsets.all(8.0),
-//                   child: TextField(
-//                     controller: controller.searchController,
-//                     decoration: InputDecoration(
-//                       labelText: "Pesquisar",
-//                       suffixIcon: IconButton(
-//                         icon: const Icon(Icons.clear),
-//                         onPressed: () {
-//                           controller.searchController.clear();
-//                         },
-//                       ),
-//                       border: OutlineInputBorder(
-//                         borderRadius: BorderRadius.circular(25.0),
-//                         borderSide: BorderSide(color: CustomColor.verde),
-//                       ),
-//                     ),
-//                   ),
-//                 ),
-//                 Expanded(
-//                   child: BlocBuilder<SearchBloc, SearchState>(
-//                     bloc: controller.searchBloc,
-//                     builder: (context, state) {
-//                       if (state is SearchLoaded) {
-//                         if (state.frases.isEmpty) {
-//                           return Center(
-//                             child: Text(
-//                               'Nenhuma frase encontrada.',
-//                               style: TextStyle(color: CustomColor.verde),
-//                             ),
-//                           );
-//                         }
-//                         return ListView.builder(
-//                           itemCount: state.frases.length,
-//                           itemBuilder: (context, index) {
-//                             var frase = state.frases[index];
-//                             return ListTile(
-//                               title: CardCustom(
-//                                 frase: frase.frase,
-//                                 autor: frase.autor,
-//                               ),
-//                             );
-//                           },
-//                         );
-//                       }
-//                       return Container();
-//                     },
-//                   ),
-//                 ),
-//               ],
-//             );
-//           } else {
-//             // Para qualquer outro estado não tratado especificamente
-//             return const Center(child: Text('Estado desconhecido'));
-//           }
-//         },
-//       ),
-//       bottomNavigationBar: const BottomBarCustom(),
-//     );
-//   }
-// }

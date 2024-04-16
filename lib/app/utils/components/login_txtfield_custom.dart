@@ -26,9 +26,9 @@ class LoginTextFieldCustom extends StatelessWidget {
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
         labelText: label,
-        labelStyle: const TextStyle(
+        labelStyle: TextStyle(
           fontSize: 14,
-          color: Colors.black,
+          color: CustomColor.pretoFonte,
           fontWeight: FontWeight.w400,
         ),
         contentPadding: const EdgeInsets.only(left: 20, bottom: 30),
@@ -40,20 +40,20 @@ class LoginTextFieldCustom extends StatelessWidget {
                 size: 18,
               ),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: CustomColor.verde, width: 1.75),
-          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide(color: CustomColor.pretoBorda, width: 1),
+          borderRadius: BorderRadius.circular(8),
         ),
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: CustomColor.verde, width: 1.75),
-          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide(color: CustomColor.pretoBorda, width: 1),
+          borderRadius: BorderRadius.circular(8),
         ),
         errorBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: Colors.red, width: 1.75),
-          borderRadius: BorderRadius.circular(28),
+          borderSide: const BorderSide(color: Colors.red, width: 1),
+          borderRadius: BorderRadius.circular(8),
         ),
         focusedErrorBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: Colors.red, width: 1.75),
-          borderRadius: BorderRadius.circular(28),
+          borderSide: const BorderSide(color: Colors.red, width: 1),
+          borderRadius: BorderRadius.circular(8),
         ),
       ),
     );

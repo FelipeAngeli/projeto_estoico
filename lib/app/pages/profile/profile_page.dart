@@ -7,6 +7,7 @@ import 'package:projeto_estoico/app/bloc/profile/profile_events.dart';
 import 'package:projeto_estoico/app/bloc/profile/profile_state.dart';
 import 'package:projeto_estoico/app/utils/components/bottom_bar_custom.dart';
 import 'package:projeto_estoico/app/utils/components/card_custom.dart';
+import 'package:projeto_estoico/app/utils/components/card_frase_dia_custom.dart';
 import 'package:projeto_estoico/app/utils/custom_color.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -82,40 +83,54 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Widget _buildUserInfo(ProfileLoaded state) {
-    return ListView(
-      children: [
-        Center(
-          child: CircleAvatar(
-            radius: 50,
-            backgroundColor: CustomColor.verde,
-            backgroundImage: const AssetImage("assets/image/profile.jpeg"),
-          ),
-        ),
-        Text(state.user.email, textAlign: TextAlign.center),
-        const SizedBox(height: 20),
-        const Text("Frases favoritas:", textAlign: TextAlign.center),
-        Text(
-          _fraseDoDia,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: CustomColor.verde,
-            fontSize: 18,
-          ),
-        ),
-        TextButton(
-            child: Text(
-              "Sair do app",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: CustomColor.verde,
-                fontSize: 16,
-              ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          const SizedBox(height: 32),
+          Center(
+            child: CircleAvatar(
+              radius: 50,
+              backgroundColor: CustomColor.verde,
+              backgroundImage: const AssetImage("assets/image/profile.jpeg"),
             ),
-            onPressed: () async {
-              await FirebaseAuth.instance.signOut();
-              Modular.to.navigate('/login');
-            })
-      ],
+          ),
+          Text(state.user.email, textAlign: TextAlign.center),
+          const SizedBox(height: 32),
+          const Spacer(),
+          Text(
+            "Frases favoritas:",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: CustomColor.preto,
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const SizedBox(height: 16),
+          ListView(shrinkWrap: true, children: [
+            Text(_fraseDoDia),
+            Text(_fraseDoDia),
+          ]),
+          const Spacer(),
+          TextButton(
+              child: Text(
+                "Sair do app",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: CustomColor.verde,
+                  fontSize: 16,
+                ),
+              ),
+              onPressed: () async {
+                await FirebaseAuth.instance.signOut();
+                Modular.to.navigate('/login');
+              }),
+          const SizedBox(height: 32),
+        ],
+      ),
     );
   }
 }

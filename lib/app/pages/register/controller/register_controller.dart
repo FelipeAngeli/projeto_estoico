@@ -9,34 +9,67 @@ class RegisterController {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController = TextEditingController();
 
+  RegisterController() {
+    // Considerar adicionar listeners para validação em tempo real
+  }
+
   Future<void> register() async {
     if (passwordController.text != confirmPasswordController.text) {
-      // Senhas não coincidem
-      print('As senhas não coincidem.'); // Aqui, considere uma melhor forma de feedback para o usuário
+      print('As senhas não coincidem.'); // Substituir por feedback adequado
       return;
     }
 
     try {
-      // Tenta criar um novo usuário com email e senha
       await _auth.createUserWithEmailAndPassword(
         email: emailController.text,
         password: passwordController.text,
       );
-      // Se sucesso, navega para a tela principal
-      Modular.to.pushNamed('/search');
+      print('Usuário registrado com sucesso');
+      Modular.to.pushNamed('/search'); // Sucesso, navega para a próxima tela
     } catch (e) {
-      // Caso ocorra algum erro durante o registro, trate aqui
-      print(e.toString()); // Considere usar um mecanismo mais robusto para mostrar o erro ao usuário
+      print('Erro ao registrar usuário: $e'); // Substituir por feedback adequado
     }
   }
 
   void dispose() {
-    // Garante a limpeza dos controllers quando o objeto é descartado
     emailController.dispose();
     passwordController.dispose();
     confirmPasswordController.dispose();
   }
 }
+
+// class RegisterController {
+//   final FirebaseAuth _auth = FirebaseAuth.instance;
+//   final TextEditingController emailController = TextEditingController();
+//   final TextEditingController passwordController = TextEditingController();
+//   final TextEditingController confirmPasswordController = TextEditingController();
+
+//   Future<void> register() async {
+//     if (passwordController.text != confirmPasswordController.text) {
+//       // Senhas não coincidem
+//       print('As senhas não coincidem.'); // Aqui, considere uma melhor forma de feedback para o usuário
+//       return;
+//     }
+
+//     try {
+//       // Tenta criar um novo usuário com email e senha
+//       await _auth.createUserWithEmailAndPassword(
+//         email: emailController.text,
+//         password: passwordController.text,
+//       );
+//       // Se sucesso, navega para a tela principal
+//       Modular.to.pushNamed('/search');
+//     } catch (e) {
+//       print(e.toString());
+//     }
+//   }
+
+//   void dispose() {
+//     emailController.dispose();
+//     passwordController.dispose();
+//     confirmPasswordController.dispose();
+//   }
+// }
 
 // class RegisterController {
 //   final formKey = GlobalKey<FormState>();

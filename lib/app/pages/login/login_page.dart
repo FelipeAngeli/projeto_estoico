@@ -5,12 +5,13 @@ import 'package:projeto_estoico/app/bloc/login/login_bloc.dart';
 import 'package:projeto_estoico/app/bloc/login/login_state.dart';
 
 import 'package:projeto_estoico/app/pages/login/controller/login_controller.dart';
+import 'package:projeto_estoico/app/utils/components/btn_login_custom.dart';
 import 'package:projeto_estoico/app/utils/components/login_txtfield_custom.dart';
 import 'package:projeto_estoico/app/utils/components/password_txtfild_custom.dart';
 import 'package:projeto_estoico/app/utils/custom_color.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  const LoginPage({super.key});
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -23,13 +24,13 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
-    loginBloc = LoginBloc(); // Instancia o LoginBloc
-    controller = LoginController(loginBloc); // Passa o LoginBloc para o Controller
+    loginBloc = LoginBloc();
+    controller = LoginController(loginBloc);
   }
 
   @override
   void dispose() {
-    loginBloc.close(); // Fecha o LoginBloc quando a página é desmontada
+    loginBloc.close();
     super.dispose();
   }
 
@@ -41,11 +42,8 @@ class _LoginPageState extends State<LoginPage> {
         child: BlocListener<LoginBloc, LoginState>(
           listener: (context, state) {
             if (state is LoginFailure) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(state.error)),
-              );
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.error)));
             } else if (state is LoginSuccess) {
-              // Navegue para a página inicial ou qualquer outra página necessária
               Modular.to.pushNamed('/search');
             }
           },
@@ -56,44 +54,67 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget _buildLoginForm() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24),
+    return Container(
+      padding: const EdgeInsets.only(
+        top: 88,
+        left: 24,
+        bottom: 24,
+        right: 24,
+      ),
       child: Form(
         key: controller.formKey,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text("Email"),
-            LoginTextFieldCustom(
-              label: "Email",
-              validator: controller.validateUsername,
-              onSaved: (value) => controller.username = value!,
+            const Image(
+              image: AssetImage('assets/image/logo.png'),
+              width: 150,
+              height: 150,
             ),
+            const SizedBox(height: 40),
+            LoginTextFieldCustom(
+                label: "Email",
+                controller: controller.emailController, // Use the controller from LoginController
+                validator: controller.validateUsername,
+                onSaved: (value) {
+                  controller.username = value ?? '';
+                }),
             const SizedBox(height: 16),
             PasswordFieldWidger(
               label: "Password",
               validator: controller.validatePassword,
               onSaved: (value) => controller.password = value!,
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 8),
+            Align(
+              alignment: Alignment.centerRight,
+              child: TextButton(
+                onPressed: () {
+                  controller.resetPassword(context);
+                },
+                child: Text(
+                  "Esqueceu a senha?",
+                  style: TextStyle(color: CustomColor.verde),
+                ),
+              ),
+            ),
+            const SizedBox(height: 8),
             BlocBuilder<LoginBloc, LoginState>(
               builder: (context, state) {
                 if (state is LoginLoading) {
                   return const CircularProgressIndicator();
                 }
-                return ElevatedButton(
-                  onPressed: controller.login,
-                  child: const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 30, vertical: 8),
-                    child: Text(
-                      "Entrar",
-                      style: TextStyle(fontSize: 20),
-                    ),
+                return SizedBox(
+                  width: double.infinity,
+                  height: 45,
+                  child: BtnLoginCustom(
+                    text: "Entrar",
+                    onPressed: controller.login,
                   ),
                 );
               },
             ),
-            const SizedBox(height: 16),
+            const Spacer(),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

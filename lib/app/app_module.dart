@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:projeto_estoico/app/bloc/frasedodia/frasedodia_bloc.dart';
 import 'package:projeto_estoico/app/bloc/login/login_bloc.dart';
+import 'package:projeto_estoico/app/bloc/register/register_bloc.dart';
 import 'package:projeto_estoico/app/bloc/search/search_bloc.dart';
 import 'package:projeto_estoico/app/bloc/profile/profile_bloc.dart';
 import 'package:projeto_estoico/app/data/provider/estosicimo_provider.dart';
@@ -42,6 +43,11 @@ class AppModule extends Module {
         ));
 
     i.add<FraseDoDiaBloc>(FraseDoDiaBloc.new);
+    i.add<RegisterBloc>(RegisterBloc.new);
+    // i.add<RegisterBloc>(() => RegisterBloc(
+    //       i.get<FirebaseAuth>(),
+    //       i.get<EstoicismoRepository>(),
+    //     ));
 
     // Controllers
     i.addLazySingleton<LoginController>(() => LoginController(

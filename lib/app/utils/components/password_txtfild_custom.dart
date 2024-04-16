@@ -30,14 +30,14 @@ class _PasswordFieldWidgerState extends State<PasswordFieldWidger> {
       keyboardType: TextInputType.visiblePassword,
       decoration: InputDecoration(
         labelText: widget.label,
-        labelStyle: const TextStyle(
+        labelStyle: TextStyle(
           fontSize: 15,
-          color: Colors.black,
+          color: CustomColor.pretoFonte,
         ),
         contentPadding: const EdgeInsets.only(left: 20, bottom: 30),
         suffixIcon: IconButton(
             icon: Icon(_isObscure ? Icons.visibility : Icons.visibility_off),
-            color: Colors.black,
+            color: CustomColor.pretoFonte,
             iconSize: 18,
             onPressed: () {
               setState(() {
@@ -45,20 +45,20 @@ class _PasswordFieldWidgerState extends State<PasswordFieldWidger> {
               });
             }),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: CustomColor.verde, width: 1.75),
-          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide(color: CustomColor.pretoBorda, width: 1),
+          borderRadius: BorderRadius.circular(8),
         ),
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: CustomColor.verde, width: 1.75),
-          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide(color: CustomColor.pretoBorda, width: 1),
+          borderRadius: BorderRadius.circular(8),
         ),
         errorBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: Colors.red, width: 1.75),
-          borderRadius: BorderRadius.circular(28),
+          borderSide: const BorderSide(color: Colors.red, width: 1),
+          borderRadius: BorderRadius.circular(8),
         ),
         focusedErrorBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: Colors.red, width: 1.75),
-          borderRadius: BorderRadius.circular(28),
+          borderSide: const BorderSide(color: Colors.red, width: 1),
+          borderRadius: BorderRadius.circular(8),
         ),
       ),
     );
