@@ -4,7 +4,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:projeto_estoico/app/bloc/register/register_bloc.dart';
 import 'package:projeto_estoico/app/bloc/register/register_event.dart';
 import 'package:projeto_estoico/app/bloc/register/register_state.dart';
-import 'package:projeto_estoico/app/pages/register/controller/register_controller.dart';
+import 'package:projeto_estoico/app/pages/login/controller/register_controller.dart';
 import 'package:projeto_estoico/app/utils/components/btn_login_custom.dart';
 import 'package:projeto_estoico/app/utils/components/login_txtfield_custom.dart';
 import 'package:projeto_estoico/app/utils/components/password_txtfild_custom.dart';

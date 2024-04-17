@@ -11,17 +11,14 @@ import 'package:projeto_estoico/app/data/provider/estosicimo_provider.dart';
 import 'package:projeto_estoico/app/data/repository/estoicismo_repoitory.dart';
 import 'package:projeto_estoico/app/data/repository/profile_repository.dart';
 import 'package:projeto_estoico/app/pages/frase/controller/frase_controller.dart';
-import 'package:projeto_estoico/app/pages/frase/frase_dia_page.dart';
+import 'package:projeto_estoico/app/pages/frase/frase_module.dart';
 import 'package:projeto_estoico/app/pages/login/login_module.dart';
-import 'package:projeto_estoico/app/pages/profile/settings_page.dart';
+import 'package:projeto_estoico/app/pages/profile/profile_module.dart';
 import 'package:projeto_estoico/app/pages/search/controller/search_controller.dart';
-import 'package:projeto_estoico/app/pages/search/search_page.dart';
 import 'package:projeto_estoico/app/pages/login/controller/login_controller.dart';
-import 'package:projeto_estoico/app/pages/login/login_page.dart';
 import 'package:projeto_estoico/app/pages/profile/controller/perfil_controller.dart';
-import 'package:projeto_estoico/app/pages/profile/profile_page.dart';
-import 'package:projeto_estoico/app/pages/register/controller/register_controller.dart';
-import 'package:projeto_estoico/app/pages/register/register_page.dart';
+import 'package:projeto_estoico/app/pages/login/controller/register_controller.dart';
+import 'package:projeto_estoico/app/pages/search/search_module.dart';
 import 'package:projeto_estoico/app/pages/splash/splash_page.dart';
 
 class AppModule extends Module {
@@ -67,12 +64,9 @@ class AppModule extends Module {
   @override
   void routes(r) {
     r.child(Modular.initialRoute, child: (context) => const SplashPage());
-
-    r.module('/login', module: LoginModule());
-    r.child('/register', child: (context) => const RegisterPage());
-    r.child('/search', child: (context) => const SearchPage());
-    r.child('/fraseDia', child: (context) => const FrasesDoDiaPage());
-    r.child('/profile', child: (context) => const ProfilePage());
-    r.child('/settings', child: (context) => SettingsPage());
+    r.module(Modular.initialRoute, module: LoginModule());
+    r.module(Modular.initialRoute, module: SearchModule());
+    r.module(Modular.initialRoute, module: FraseModule());
+    r.module(Modular.initialRoute, module: ProfileModule());
   }
 }
