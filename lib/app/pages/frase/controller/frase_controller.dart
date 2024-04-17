@@ -8,17 +8,13 @@ class FrasesDoDiaController {
 
   FrasesDoDiaController({required this.estoicismoBloc});
 
-  Future<void> salvarFrase(EstoicismoModel frase) async {
+  Future<void> salvarFrases(EstoicismoModel frase) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('fraseDoDia', '${frase.frase} - ${frase.autor}');
-    print('Frase salva: ${frase.frase} - ${frase.autor}');
+    List<String> frasesSalvas = [];
+    frasesSalvas.add(frase.frase);
+    await prefs.setStringList("frasesDoDia", frasesSalvas);
+    print('Frase salva: ${frasesSalvas.toString()}');
   }
-  // Future<void> salvarFrase(EstoicismoModel frase) async {
-  //   final SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   // Aqui estamos salvando a frase e o autor como uma string única.
-  //   await prefs.setString('fraseDoDia', '${frase.frase} - ${frase.autor}');
-  //   print('Frase salva: ${frase.frase} - ${frase.autor}');
-  // }
 
   Future<EstoicismoModel?> carregarFraseSalva() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();

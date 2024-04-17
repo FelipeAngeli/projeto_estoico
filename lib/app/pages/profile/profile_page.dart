@@ -6,8 +6,7 @@ import 'package:projeto_estoico/app/bloc/profile/profile_bloc.dart';
 import 'package:projeto_estoico/app/bloc/profile/profile_events.dart';
 import 'package:projeto_estoico/app/bloc/profile/profile_state.dart';
 import 'package:projeto_estoico/app/utils/components/bottom_bar_custom.dart';
-import 'package:projeto_estoico/app/utils/components/card_custom.dart';
-import 'package:projeto_estoico/app/utils/components/card_frase_dia_custom.dart';
+
 import 'package:projeto_estoico/app/utils/custom_color.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -21,7 +20,7 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   final profileBloc = Modular.get<ProfileBloc>();
 
-  String _fraseDoDia = "";
+  List<String> _fraseDoDia = [];
 
   @override
   void initState() {
@@ -32,8 +31,8 @@ class _ProfilePageState extends State<ProfilePage> {
 
   void _carregarFraseDoDia() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    // Certifique-se de que a chave usada aqui corresponde exatamente à chave usada para salvar.
-    final fraseSalva = prefs.getString('fraseDoDia') ?? "Nenhuma frase do dia salva.";
+
+    final fraseSalva = prefs.getStringList('frasesDoDia') ?? [];
     setState(() {
       // Aqui você armazena a frase do dia carregada em uma variável da classe
       _fraseDoDia = fraseSalva;
@@ -51,7 +50,7 @@ class _ProfilePageState extends State<ProfilePage> {
             IconButton(
               icon: const Icon(Icons.settings),
               onPressed: () {
-                // Defina o que acontece quando o botão de configurações é pressionado
+                Modular.to.pushNamed('/settings');
               },
               tooltip: 'Configurações',
               color: CustomColor.verde,
@@ -110,10 +109,10 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
           ),
           const SizedBox(height: 16),
-          ListView(shrinkWrap: true, children: [
-            Text(_fraseDoDia),
-            Text(_fraseDoDia),
-          ]),
+          ListView(
+            shrinkWrap: true,
+            children: _fraseDoDia.map((e) => Text(e)).toList(),
+          ),
           const Spacer(),
           TextButton(
               child: Text(

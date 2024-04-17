@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:projeto_estoico/app/utils/custom_color.dart';
@@ -20,7 +21,13 @@ class _SplashPageState extends State<SplashPage> {
   _navigateToLogin() async {
     await Future.delayed(const Duration(seconds: 3));
 
-    Modular.to.pushReplacementNamed('/login');
+    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+      if (user == null) {
+        Modular.to.pushNamed('/login');
+      } else {
+        Modular.to.pushReplacementNamed('/fraseDia');
+      }
+    });
   }
 
   @override
