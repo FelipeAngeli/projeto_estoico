@@ -4,10 +4,11 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:projeto_estoico/app/modules/login/bloc/login/login_bloc.dart';
 import 'package:projeto_estoico/app/modules/login/bloc/login/login_events.dart';
 import 'package:projeto_estoico/app/modules/login/bloc/login/login_state.dart';
-import 'package:projeto_estoico/app/utils/components/btn_login_custom.dart';
-import 'package:projeto_estoico/app/utils/components/login_txtfield_custom.dart';
-import 'package:projeto_estoico/app/utils/components/password_txtfild_custom.dart';
-import 'package:projeto_estoico/app/utils/custom_color.dart';
+import 'package:projeto_estoico/app/shared/widgets/btn_login_custom.dart';
+import 'package:projeto_estoico/app/shared/widgets/login_txtfield_custom.dart';
+import 'package:projeto_estoico/app/shared/widgets/password_txtfild_custom.dart';
+import 'package:projeto_estoico/app/utils/color_custom.dart';
+import 'package:validatorless/validatorless.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -18,6 +19,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   late final LoginBloc loginBloc;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -31,21 +33,11 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
-  String? validateUsername(String? value) {
-    if (value == null || value.isEmpty) return 'Por favor, insira seu e-mail';
-    return null;
-  }
-
-  String? validatePassword(String? value) {
-    if (value == null || value.isEmpty) return 'Por favor, insira sua senha';
-    return null;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocProvider<LoginBloc>(
-        create: (_) => LoginBloc(),
+        create: (_) => loginBloc,
         child: BlocConsumer<LoginBloc, LoginState>(
           listener: (context, state) {
             if (state is LoginFailure) {
@@ -57,24 +49,18 @@ class _LoginPageState extends State<LoginPage> {
             }
           },
           builder: (context, state) {
-            final bloc = BlocProvider.of<LoginBloc>(context);
-            return _buildLoginForm(bloc, context, state);
+            return _buildLoginForm(context, state);
           },
         ),
       ),
     );
   }
 
-  Widget _buildLoginForm(LoginBloc bloc, BuildContext context, LoginState state) {
+  Widget _buildLoginForm(BuildContext context, LoginState state) {
     return Container(
-      padding: const EdgeInsets.only(
-        top: 88,
-        left: 24,
-        bottom: 24,
-        right: 24,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 88),
       child: Form(
-        key: bloc.formKey,
+        key: _formKey,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -85,75 +71,73 @@ class _LoginPageState extends State<LoginPage> {
             ),
             const SizedBox(height: 40),
             LoginTextFieldCustom(
-                label: "Email",
-                controller: bloc.emailController, // Controlador para email
-                validator: validateUsername,
-                onSaved: (value) {
-                  // A senha é salva diretamente pelo PasswordFieldWidget
-                }),
+              label: "Email",
+              controller: loginBloc.emailController,
+              validator: Validatorless.multiple([
+                Validatorless.required("Email obrigatório"),
+                Validatorless.email("O email não é valido"),
+              ]),
+              onSaved: (value) {
+                if (value != null) {
+                  loginBloc.add(LoginEmailSaved(value));
+                }
+                print('Email saved: $value');
+              },
+            ),
             const SizedBox(height: 16),
             PasswordFieldWidger(
               label: "Password",
-              controller: bloc.passwordController,
-              validator: validatePassword,
+              controller: loginBloc.passwordController,
+              validator: Validatorless.multiple([
+                Validatorless.required('A senha é obrigatória'),
+                Validatorless.min(6, 'A senha deve conter no mínimo 6 caracteres')
+              ]),
               onSaved: (value) {
-                // Sempre que o formulário for salvo, acionar o LoginAttempt
+                if (value != null) {
+                  loginBloc.add(LoginPasswordSaved(value));
+                }
+                print('Password saved: $value');
               },
             ),
             const SizedBox(height: 8),
             Align(
               alignment: Alignment.centerRight,
               child: TextButton(
-                onPressed: () => bloc.add(PasswordResetRequested()),
-                child: Text("Esqueceu a senha?", style: TextStyle(color: CustomColor.verde)),
+                onPressed: () {
+                  print('Password reset requested');
+                  loginBloc.add(PasswordResetRequested());
+                },
+                child: Text("Esqueceu a senha?", style: TextStyle(color: ColorCustom.verde)),
               ),
             ),
             const SizedBox(height: 8),
-            if (state is LoginLoading)
-              const CircularProgressIndicator()
-            else
-              BlocBuilder<LoginBloc, LoginState>(
-                builder: (context, state) {
-                  if (state is LoginLoading) {
-                    return CircularProgressIndicator(
-                      color: CustomColor.verde,
-                    );
-                  }
-                  return SizedBox(
-                    width: double.infinity,
-                    height: 45,
-                    child: BtnLoginCustom(
-                      text: "Entrar",
-                      onPressed: () => bloc.add(LoginAttempt(
-                          username: bloc.emailController.text,
-                          password: bloc.passwordController.text)), // Correção feita aqui
-                    ),
-                  );
-                },
-              ),
-            // SizedBox(
-            //   width: double.infinity,
-            //   height: 45,
-            //   child: BtnLoginCustom(
-            //     text: "Entrar",
-            //     onPressed: () {
-            //       if (bloc.formKey.currentState!.validate()) {
-            //         bloc.formKey.currentState!.save(); // Garantir que os campos estão salvos
-            //         bloc.add(LoginAttempt(
-            //             username: bloc.emailController.text,
-            //             password: bloc.passwordFieldController.text)); // Usando o valor diretamente do controlador
-            //       }
-            //     },
-            //   ),
-            // ),
+            SizedBox(
+              width: double.infinity,
+              child: BtnLoginCustom(
+                  text: "Entrar",
+                  backgroundColor: ColorCustom.verde,
+                  onPressed: () {
+                    if (loginBloc.formKey.currentState!.validate()) {
+                      print('Form is valid');
+                      loginBloc.formKey.currentState!.save();
+                      loginBloc.add(LoginAttempt(
+                        username: loginBloc.emailController.text,
+                        password: loginBloc.passwordController.text,
+                      ));
+                    }
+                  }),
+            ),
             const Spacer(),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text("Não tem conta?"),
                 TextButton(
-                  onPressed: () => Modular.to.pushNamed('/register'),
-                  child: Text("Crie a sua", style: TextStyle(color: CustomColor.verde)),
+                  onPressed: () {
+                    print('Create account button pressed');
+                    Modular.to.pushNamed('/register');
+                  },
+                  child: Text("Crie a sua", style: TextStyle(color: ColorCustom.verde)),
                 ),
               ],
             ),
@@ -172,8 +156,11 @@ class _LoginPageState extends State<LoginPage> {
           content: const Text("Um link para redefinição de senha foi enviado para o seu e-mail."),
           actions: [
             TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: Text("OK", style: TextStyle(color: CustomColor.verde)),
+              onPressed: () {
+                print('Reset password dialog closed');
+                Navigator.of(context).pop();
+              },
+              child: Text("OK", style: TextStyle(color: ColorCustom.verde)),
             ),
           ],
         );

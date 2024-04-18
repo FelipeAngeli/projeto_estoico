@@ -5,11 +5,11 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:projeto_estoico/app/modules/frase/bloc/frasedodia_bloc.dart';
 import 'package:projeto_estoico/app/modules/frase/bloc/frasedodia_events.dart';
 import 'package:projeto_estoico/app/modules/frase/bloc/frasedodia_states.dart';
-import 'package:projeto_estoico/app/utils/components/app_bar_custom.dart';
-import 'package:projeto_estoico/app/utils/components/bottom_bar_custom.dart';
-import 'package:projeto_estoico/app/utils/components/card_frase_dia_custom.dart';
-import 'package:projeto_estoico/app/utils/components/social_share_btn.dart';
-import 'package:projeto_estoico/app/utils/custom_color.dart';
+import 'package:projeto_estoico/app/shared/widgets/app_bar_custom.dart';
+import 'package:projeto_estoico/app/shared/widgets/bottom_bar_custom.dart';
+import 'package:projeto_estoico/app/shared/widgets/card_frase_dia_custom.dart';
+import 'package:projeto_estoico/app/shared/widgets/social_share_btn.dart';
+import 'package:projeto_estoico/app/utils/color_custom.dart';
 
 class FrasesDoDiaPage extends StatefulWidget {
   const FrasesDoDiaPage({super.key});
@@ -43,7 +43,7 @@ class _FrasesDoDiaPageState extends State<FrasesDoDiaPage> {
                 actions.add(IconButton(
                   icon: Icon(
                     _isFraseSalva ? Icons.favorite : Icons.favorite_border,
-                    color: _isFraseSalva ? Colors.red : CustomColor.verde,
+                    color: _isFraseSalva ? Colors.red : ColorCustom.verde,
                     size: 24,
                   ),
                   onPressed: () {

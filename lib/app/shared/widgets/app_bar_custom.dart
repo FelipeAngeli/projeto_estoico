@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_estoico/app/utils/custom_color.dart';
+import 'package:projeto_estoico/app/utils/color_custom.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String? title;
@@ -10,8 +10,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: CustomColor.backgroundColor, // Cor de fundo da AppBar
-      elevation: 0, // Remove a sombra abaixo da AppBar
+      backgroundColor: ColorCustom.backgroundColor, // Cor de fundo da AppBar
+      elevation: 0,
       leading: Padding(
         padding: const EdgeInsets.only(top: 8, left: 4, bottom: 8),
         child: Image.asset(

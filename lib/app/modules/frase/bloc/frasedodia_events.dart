@@ -1,4 +1,4 @@
-import 'package:projeto_estoico/app/models/estoicimsmo_model.dart';
+import 'package:projeto_estoico/app/core/models/estoicimsmo_model.dart';
 
 abstract class FraseDoDiaEvent {}
 

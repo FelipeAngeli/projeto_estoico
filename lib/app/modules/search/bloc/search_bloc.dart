@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:projeto_estoico/app/modules/search/bloc/search_event.dart';
 import 'package:projeto_estoico/app/modules/search/bloc/search_state.dart';
-import 'package:projeto_estoico/app/data/repository/estoicismo_repoitory.dart';
+import 'package:projeto_estoico/app/core/data/repository/estoicismo_repoitory.dart';
 
 class SearchBloc extends Bloc<SearchEvent, SearchState> {
   final EstoicismoRepository repository;

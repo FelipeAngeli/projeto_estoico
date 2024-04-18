@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_estoico/app/utils/custom_color.dart';
+import 'package:projeto_estoico/app/utils/color_custom.dart';
 
 class LoginTextFieldCustom extends StatelessWidget {
   final String? Function(String?)? validator;
@@ -28,7 +28,7 @@ class LoginTextFieldCustom extends StatelessWidget {
         labelText: label,
         labelStyle: TextStyle(
           fontSize: 14,
-          color: CustomColor.pretoFonte,
+          color: ColorCustom.pretoFonte,
           fontWeight: FontWeight.w400,
         ),
         contentPadding: const EdgeInsets.only(left: 20, bottom: 30),
@@ -40,11 +40,11 @@ class LoginTextFieldCustom extends StatelessWidget {
                 size: 18,
               ),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: CustomColor.pretoBorda, width: 1),
+          borderSide: BorderSide(color: ColorCustom.pretoBorda, width: 1),
           borderRadius: BorderRadius.circular(8),
         ),
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: CustomColor.pretoBorda, width: 1),
+          borderSide: BorderSide(color: ColorCustom.pretoBorda, width: 1),
           borderRadius: BorderRadius.circular(8),
         ),
         errorBorder: OutlineInputBorder(

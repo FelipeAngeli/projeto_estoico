@@ -4,10 +4,10 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:projeto_estoico/app/modules/login/bloc/register/register_bloc.dart';
 import 'package:projeto_estoico/app/modules/login/bloc/register/register_event.dart';
 import 'package:projeto_estoico/app/modules/login/bloc/register/register_state.dart';
-import 'package:projeto_estoico/app/utils/components/btn_login_custom.dart';
-import 'package:projeto_estoico/app/utils/components/login_txtfield_custom.dart';
-import 'package:projeto_estoico/app/utils/components/password_txtfild_custom.dart';
-import 'package:projeto_estoico/app/utils/custom_color.dart';
+import 'package:projeto_estoico/app/shared/widgets/btn_login_custom.dart';
+import 'package:projeto_estoico/app/shared/widgets/login_txtfield_custom.dart';
+import 'package:projeto_estoico/app/shared/widgets/password_txtfild_custom.dart';
+import 'package:projeto_estoico/app/utils/color_custom.dart';
 
 class RegisterPage extends StatelessWidget {
   const RegisterPage({super.key});
@@ -80,7 +80,7 @@ class _RegistrationForm extends StatelessWidget {
               onPressed: () => Modular.to.pushNamed('/login'),
               child: Text(
                 'Já tem uma conta? Clique aqui',
-                style: TextStyle(color: CustomColor.verde),
+                style: TextStyle(color: ColorCustom.verde),
               ),
             ),
           ],

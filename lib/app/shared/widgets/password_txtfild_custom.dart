@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_estoico/app/utils/custom_color.dart';
+import 'package:projeto_estoico/app/utils/color_custom.dart';
 
 class PasswordFieldWidger extends StatefulWidget {
   final Function(String?)? onSaved;
@@ -32,12 +32,12 @@ class _PasswordFieldWidgerState extends State<PasswordFieldWidger> {
         labelText: widget.label,
         labelStyle: TextStyle(
           fontSize: 15,
-          color: CustomColor.pretoFonte,
+          color: ColorCustom.pretoFonte,
         ),
         contentPadding: const EdgeInsets.only(left: 20, bottom: 30),
         suffixIcon: IconButton(
             icon: Icon(_isObscure ? Icons.visibility : Icons.visibility_off),
-            color: CustomColor.pretoFonte,
+            color: ColorCustom.pretoFonte,
             iconSize: 18,
             onPressed: () {
               setState(() {
@@ -45,11 +45,11 @@ class _PasswordFieldWidgerState extends State<PasswordFieldWidger> {
               });
             }),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: CustomColor.pretoBorda, width: 1),
+          borderSide: BorderSide(color: ColorCustom.pretoBorda, width: 1),
           borderRadius: BorderRadius.circular(8),
         ),
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: CustomColor.pretoBorda, width: 1),
+          borderSide: BorderSide(color: ColorCustom.pretoBorda, width: 1),
           borderRadius: BorderRadius.circular(8),
         ),
         errorBorder: OutlineInputBorder(

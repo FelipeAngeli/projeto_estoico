@@ -1,4 +1,4 @@
-import 'package:projeto_estoico/app/models/user_model.dart';
+import 'package:projeto_estoico/app/core/models/user_model.dart';
 
 abstract class ProfileState {}
 

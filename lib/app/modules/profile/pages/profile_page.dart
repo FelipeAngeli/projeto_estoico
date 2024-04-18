@@ -5,9 +5,9 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:projeto_estoico/app/modules/profile/blocs/profile/profile_bloc.dart';
 import 'package:projeto_estoico/app/modules/profile/blocs/profile/profile_events.dart';
 import 'package:projeto_estoico/app/modules/profile/blocs/profile/profile_state.dart';
-import 'package:projeto_estoico/app/utils/components/bottom_bar_custom.dart';
+import 'package:projeto_estoico/app/shared/widgets/bottom_bar_custom.dart';
 
-import 'package:projeto_estoico/app/utils/custom_color.dart';
+import 'package:projeto_estoico/app/utils/color_custom.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // class ProfilePage extends StatefulWidget {
@@ -165,7 +165,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 Modular.to.pushNamed('/settings');
               },
               tooltip: 'Configurações',
-              color: CustomColor.verde,
+              color: ColorCustom.verde,
             ),
           ],
         ),
@@ -204,7 +204,7 @@ class _ProfilePageState extends State<ProfilePage> {
           Center(
             child: CircleAvatar(
               radius: 50,
-              backgroundColor: CustomColor.verde,
+              backgroundColor: ColorCustom.verde,
               backgroundImage: const AssetImage("assets/image/profile.jpeg"),
             ),
           ),
@@ -215,7 +215,7 @@ class _ProfilePageState extends State<ProfilePage> {
             "Frases favoritas:",
             textAlign: TextAlign.center,
             style: TextStyle(
-              color: CustomColor.preto,
+              color: ColorCustom.preto,
               fontSize: 24,
               fontWeight: FontWeight.bold,
             ),
@@ -231,7 +231,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 "Sair do app",
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: CustomColor.verde,
+                  color: ColorCustom.verde,
                   fontSize: 16,
                 ),
               ),

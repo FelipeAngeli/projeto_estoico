@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_estoico/app/utils/custom_color.dart';
+import 'package:projeto_estoico/app/utils/color_custom.dart';
 
 class CardFraseDiaCustom extends StatelessWidget {
   final String frase;
@@ -21,7 +21,7 @@ class CardFraseDiaCustom extends StatelessWidget {
         Text(
           frase,
           style: TextStyle(
-            color: CustomColor.preto,
+            color: ColorCustom.preto,
             fontSize: 16,
             fontWeight: FontWeight.normal,
           ),
@@ -32,7 +32,7 @@ class CardFraseDiaCustom extends StatelessWidget {
           child: Text(
             autor,
             style: TextStyle(
-              color: CustomColor.preto,
+              color: ColorCustom.preto,
               fontSize: 14,
               fontWeight: FontWeight.w600,
             ),

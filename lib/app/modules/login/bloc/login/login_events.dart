@@ -1,4 +1,15 @@
+// Eventos
 abstract class LoginEvent {}
+
+class LoginEmailSaved extends LoginEvent {
+  final String email;
+  LoginEmailSaved(this.email);
+}
+
+class LoginPasswordSaved extends LoginEvent {
+  final String password;
+  LoginPasswordSaved(this.password);
+}
 
 class LoginAttempt extends LoginEvent {
   final String username;

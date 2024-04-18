@@ -1,8 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:projeto_estoico/app/modules/frase/bloc/frasedodia_events.dart';
 import 'package:projeto_estoico/app/modules/frase/bloc/frasedodia_states.dart';
-import 'package:projeto_estoico/app/data/repository/estoicismo_repoitory.dart';
-import 'package:projeto_estoico/app/models/estoicimsmo_model.dart';
+import 'package:projeto_estoico/app/core/data/repository/estoicismo_repoitory.dart';
+import 'package:projeto_estoico/app/core/models/estoicimsmo_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class FraseDoDiaBloc extends Bloc<FraseDoDiaEvent, FraseDoDiaState> {

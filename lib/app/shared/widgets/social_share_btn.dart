@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_estoico/app/utils/custom_color.dart';
+import 'package:projeto_estoico/app/utils/color_custom.dart';
 import 'package:share_plus/share_plus.dart';
 
 class SocialShareButton extends StatelessWidget {
@@ -17,7 +17,7 @@ class SocialShareButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      icon: Icon(Icons.share, color: CustomColor.verde),
+      icon: Icon(Icons.share, color: ColorCustom.verde),
       onPressed: () {
         showDialog(
           context: context,
@@ -55,7 +55,7 @@ class SocialShareButton extends StatelessWidget {
                 TextButton(
                   child: Text(
                     'Fechar',
-                    style: TextStyle(color: CustomColor.verde),
+                    style: TextStyle(color: ColorCustom.verde),
                   ),
                   onPressed: () {
                     Navigator.of(context).pop();

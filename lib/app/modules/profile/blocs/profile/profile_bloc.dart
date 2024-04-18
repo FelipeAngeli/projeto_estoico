@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:projeto_estoico/app/modules/profile/blocs/profile/profile_events.dart';
 import 'package:projeto_estoico/app/modules/profile/blocs/profile/profile_state.dart';
-import 'package:projeto_estoico/app/data/repository/profile_repository.dart';
+import 'package:projeto_estoico/app/core/data/repository/profile_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {

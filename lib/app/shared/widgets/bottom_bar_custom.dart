@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:projeto_estoico/app/utils/custom_color.dart';
+import 'package:projeto_estoico/app/utils/color_custom.dart';
 
 class BottomBarCustom extends StatefulWidget {
   const BottomBarCustom({super.key});
@@ -32,8 +32,8 @@ class _BottomBarCustomState extends State<BottomBarCustom> {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-      backgroundColor: CustomColor.backgroundColor,
-      selectedItemColor: CustomColor.verde,
+      backgroundColor: ColorCustom.backgroundColor,
+      selectedItemColor: ColorCustom.verde,
       unselectedItemColor: Colors.grey,
       currentIndex: _selectedIndex,
       onTap: _onItemTapped,

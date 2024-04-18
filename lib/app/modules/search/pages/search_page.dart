@@ -3,10 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:projeto_estoico/app/modules/search/bloc/search_bloc.dart';
 import 'package:projeto_estoico/app/modules/search/bloc/search_state.dart';
-import 'package:projeto_estoico/app/utils/components/app_bar_custom.dart';
-import 'package:projeto_estoico/app/utils/components/bottom_bar_custom.dart';
-import 'package:projeto_estoico/app/utils/components/card_custom.dart';
-import 'package:projeto_estoico/app/utils/custom_color.dart';
+import 'package:projeto_estoico/app/shared/widgets/app_bar_custom.dart';
+import 'package:projeto_estoico/app/shared/widgets/bottom_bar_custom.dart';
+import 'package:projeto_estoico/app/shared/widgets/card_custom.dart';
+import 'package:projeto_estoico/app/utils/color_custom.dart';
 
 class SearchPage extends StatelessWidget {
   const SearchPage({super.key});
@@ -36,7 +36,7 @@ class SearchPage extends StatelessWidget {
                     ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(25.0),
-                      borderSide: BorderSide(color: CustomColor.verde),
+                      borderSide: BorderSide(color: ColorCustom.verde),
                     ),
                   ),
                 );
@@ -62,11 +62,11 @@ class SearchPage extends StatelessWidget {
                     );
                   } else if (state is SearchError) {
                     return Center(
-                      child: Text(state.message, style: TextStyle(color: CustomColor.verde)),
+                      child: Text(state.message, style: TextStyle(color: ColorCustom.verde)),
                     );
                   } else if (state is SearchInitial || state is SearchEmpty) {
                     return Center(
-                      child: Text('Digite algo para iniciar a busca.', style: TextStyle(color: CustomColor.verde)),
+                      child: Text('Digite algo para iniciar a busca.', style: TextStyle(color: ColorCustom.verde)),
                     );
                   }
                   return const Center(child: Text('Estado desconhecido'));
