@@ -7,9 +7,9 @@ import 'package:projeto_estoico/app/modules/login/bloc/register/register_bloc.da
 import 'package:projeto_estoico/app/modules/search/bloc/search_bloc.dart';
 import 'package:projeto_estoico/app/modules/profile/blocs/profile/profile_bloc.dart';
 import 'package:projeto_estoico/app/modules/profile/blocs/settings/settings_bloc.dart';
-import 'package:projeto_estoico/app/data/provider/estosicimo_provider.dart';
-import 'package:projeto_estoico/app/data/repository/estoicismo_repoitory.dart';
-import 'package:projeto_estoico/app/data/repository/profile_repository.dart';
+import 'package:projeto_estoico/app/core/data/provider/estosicimo_provider.dart';
+import 'package:projeto_estoico/app/core/data/repository/estoicismo_repoitory.dart';
+import 'package:projeto_estoico/app/core/data/repository/profile_repository.dart';
 import 'package:projeto_estoico/app/modules/frase/frase_module.dart';
 import 'package:projeto_estoico/app/modules/login/login_module.dart';
 import 'package:projeto_estoico/app/modules/profile/profile_module.dart';
