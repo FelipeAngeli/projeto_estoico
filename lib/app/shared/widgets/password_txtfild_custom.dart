@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_estoico/app/utils/color_custom.dart';
+import 'package:projeto_estoico/app/utils/font_custom.dart';
 
 class PasswordFieldWidger extends StatefulWidget {
   final Function(String?)? onSaved;
@@ -30,14 +31,11 @@ class _PasswordFieldWidgerState extends State<PasswordFieldWidger> {
       keyboardType: TextInputType.visiblePassword,
       decoration: InputDecoration(
         labelText: widget.label,
-        labelStyle: TextStyle(
-          fontSize: 15,
-          color: ColorCustom.pretoFonte,
-        ),
+        labelStyle: FontCustom.montserratRegular(15).copyWith(color: ColorCustom.pretoFonte),
         contentPadding: const EdgeInsets.only(left: 20, bottom: 30),
         suffixIcon: IconButton(
             icon: Icon(_isObscure ? Icons.visibility : Icons.visibility_off),
-            color: ColorCustom.pretoFonte,
+            color: ColorCustom.pretoBorda,
             iconSize: 18,
             onPressed: () {
               setState(() {
@@ -53,11 +51,11 @@ class _PasswordFieldWidgerState extends State<PasswordFieldWidger> {
           borderRadius: BorderRadius.circular(8),
         ),
         errorBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: Colors.red, width: 1),
+          borderSide: BorderSide(color: ColorCustom.verde500, width: 2),
           borderRadius: BorderRadius.circular(8),
         ),
         focusedErrorBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: Colors.red, width: 1),
+          borderSide: BorderSide(color: ColorCustom.verde500, width: 2),
           borderRadius: BorderRadius.circular(8),
         ),
       ),

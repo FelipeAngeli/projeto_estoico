@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_estoico/app/utils/color_custom.dart';
+import 'package:projeto_estoico/app/utils/font_custom.dart';
 
 class LoginTextFieldCustom extends StatelessWidget {
   final String? Function(String?)? validator;
@@ -26,11 +27,7 @@ class LoginTextFieldCustom extends StatelessWidget {
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
         labelText: label,
-        labelStyle: TextStyle(
-          fontSize: 14,
-          color: ColorCustom.pretoFonte,
-          fontWeight: FontWeight.w400,
-        ),
+        labelStyle: FontCustom.montserratRegular(15).copyWith(color: ColorCustom.pretoFonte),
         contentPadding: const EdgeInsets.only(left: 20, bottom: 30),
         suffixIcon: icon == null
             ? null
@@ -48,11 +45,11 @@ class LoginTextFieldCustom extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
         ),
         errorBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: Colors.red, width: 1),
+          borderSide: BorderSide(color: ColorCustom.verde500, width: 2),
           borderRadius: BorderRadius.circular(8),
         ),
         focusedErrorBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: Colors.red, width: 1),
+          borderSide: BorderSide(color: ColorCustom.verde500, width: 2),
           borderRadius: BorderRadius.circular(8),
         ),
       ),

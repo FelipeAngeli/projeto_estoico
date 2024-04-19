@@ -12,4 +12,6 @@ abstract class AuthService {
   });
   Future<void> signOut();
   User? get currentUser;
+
+  Future<void> sendPasswordResetEmail(String email);
 }

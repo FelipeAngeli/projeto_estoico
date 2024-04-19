@@ -53,6 +53,17 @@ class AuthServiceImpl implements AuthService {
   }
 
   @override
+  Future<void> sendPasswordResetEmail(String email) async {
+    try {
+      print("Enviando e-mail de redefinição de senha para: $email");
+      await _auth.sendPasswordResetEmail(email: email);
+    } catch (e) {
+      print("Falha ao enviar e-mail para: $email");
+      throw Exception('Falha ao enviar e-mail de redefinição de senha');
+    }
+  }
+
+  @override
   Future<void> signOut() async {
     await _auth.signOut();
   }
