@@ -46,6 +46,7 @@ app.*.map.json
 # Ignore Firebase service account key
 **/google-services.json
 **/GoogleService-Info.plist
+lib/firebase_options.dart
 
 # Ignore any .env files that may contain secrets
 .env*
