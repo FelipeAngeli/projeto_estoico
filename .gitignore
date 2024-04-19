@@ -41,3 +41,32 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Firebase ignore rules
+# Ignore Firebase service account key
+**/google-services.json
+**/GoogleService-Info.plist
+
+# Ignore any .env files that may contain secrets
+.env*
+**/.env
+
+# Pub cache, including pubspec.lock for libraries
+.dart_tool/
+.buildlog/
+.pub-cache/
+.pub/
+
+# Generated files
+**/generated_plugin_registrant.dart
+
+# If you're using Firebase Hosting, also ignore firebase.json
+**/firebase.json
+
+# MacOS specific
+.DS_Store
+
+# General build outputs
+build/
+build_logs/
+outputs/
