@@ -2,13 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:projeto_estoico/app/modules/frase/bloc/frasedodia_bloc.dart';
-import 'package:projeto_estoico/app/modules/login/bloc/login/login_bloc.dart';
-import 'package:projeto_estoico/app/modules/login/bloc/register/register_bloc.dart';
+
 import 'package:projeto_estoico/app/modules/login/cubit/profile/auth_cubit.dart';
 import 'package:projeto_estoico/app/modules/search/bloc/search_bloc.dart';
 import 'package:projeto_estoico/app/core/data/provider/estosicimo_provider.dart';
 import 'package:projeto_estoico/app/core/data/repository/estoicismo_repoitory.dart';
-import 'package:projeto_estoico/app/core/data/repository/profile_repository.dart';
 import 'package:projeto_estoico/app/modules/frase/frase_module.dart';
 import 'package:projeto_estoico/app/modules/login/login_module.dart';
 import 'package:projeto_estoico/app/modules/search/search_module.dart';
@@ -42,7 +40,6 @@ class AppModule extends Module {
     i.add<FraseDoDiaBloc>(() => FraseDoDiaBloc(
           Modular.get<EstoicismoRepository>(),
         ));
-    i.add<RegisterBloc>(RegisterBloc.new);
   }
 
   @override

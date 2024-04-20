@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -14,7 +15,17 @@ class SearchPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(title: "Pesquise pela frase"),
+      appBar: CustomAppBar(title: "Pesquise pela frase", actions: [
+        IconButton(
+            onPressed: () async {
+              await FirebaseAuth.instance.signOut();
+              Modular.to.navigate('/login');
+            },
+            icon: const Icon(
+              Icons.logout,
+            ),
+            color: ColorCustom.verde),
+      ]),
       body: BlocProvider<SearchBloc>(
         create: (context) => Modular.get<SearchBloc>(),
         child: Column(

@@ -3,9 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:projeto_estoico/app/core/ui/base_state/base_state.dart';
 import 'package:projeto_estoico/app/modules/login/cubit/profile/auth_cubit.dart';
-import 'package:projeto_estoico/app/shared/widgets/button_login_custom.dart';
-import 'package:projeto_estoico/app/shared/widgets/login_txtfield_custom.dart';
-import 'package:projeto_estoico/app/shared/widgets/password_txtfild_custom.dart';
+import 'package:projeto_estoico/app/shared/widgets/button_custom.dart';
+import 'package:projeto_estoico/app/shared/widgets/textfield_custom.dart';
 import 'package:projeto_estoico/app/utils/color_custom.dart';
 import 'package:projeto_estoico/app/utils/font_custom.dart';
 import 'package:validatorless/validatorless.dart';
@@ -21,7 +20,8 @@ class _LoginPageState extends BaseState<LoginPage, AuthCubit> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  // bool _isButtonEnabled = false;
+  bool emailFormFieldValid = false;
+  bool passwordFormFieldValid = false;
 
   @override
   void dispose() {
@@ -30,20 +30,12 @@ class _LoginPageState extends BaseState<LoginPage, AuthCubit> {
     _passwordController.dispose();
   }
 
-  // void _updateButtonState() {
-  //   final validForm = _formKey.currentState?.validate() ?? false;
-  //   setState(() {
-  //     _isButtonEnabled = validForm;
-  //   });
-  // }
-
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AuthCubit, AuthState>(
       bloc: controller,
       listener: (context, state) {
         if (state is AuthErrorState) {
-          // showError(state.message);
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text(state.message),
           ));
@@ -74,9 +66,21 @@ class _LoginPageState extends BaseState<LoginPage, AuthCubit> {
                       style: FontCustom.montserratSemiBold24.copyWith(color: ColorCustom.preto),
                     ),
                     const SizedBox(height: 48),
-                    LoginTextFieldCustom(
+                    TextFieldCustom(
                       label: "E-mail",
                       controller: _emailController,
+                      keyboardType: TextInputType.emailAddress,
+                      onChanged: (value) {
+                        if (value.isNotEmpty) {
+                          setState(() {
+                            emailFormFieldValid = true;
+                          });
+                        } else {
+                          setState(() {
+                            emailFormFieldValid = false;
+                          });
+                        }
+                      },
                       validator: Validatorless.multiple([
                         Validatorless.required("Email obrigatório"),
                         Validatorless.email("O email não é valido"),
@@ -86,9 +90,21 @@ class _LoginPageState extends BaseState<LoginPage, AuthCubit> {
                       },
                     ),
                     const SizedBox(height: 16),
-                    PasswordFieldWidger(
+                    TextFieldCustom(
                       label: "Password",
+                      keyboardType: TextInputType.visiblePassword,
                       controller: _passwordController,
+                      onChanged: (value) {
+                        if (value.isNotEmpty) {
+                          setState(() {
+                            passwordFormFieldValid = true;
+                          });
+                        } else {
+                          setState(() {
+                            passwordFormFieldValid = false;
+                          });
+                        }
+                      },
                       validator: Validatorless.multiple([
                         Validatorless.required('A senha é obrigatória'),
                         Validatorless.min(6, 'A senha deve conter no mínimo 6 caracteres')
@@ -98,7 +114,7 @@ class _LoginPageState extends BaseState<LoginPage, AuthCubit> {
                       },
                     ),
                     const SizedBox(height: 24),
-                    ButtonLoginCustom(
+                    ButtonCustom(
                       type: CustomButtonType.elevated,
                       width: double.infinity,
                       height: 36,
@@ -113,16 +129,13 @@ class _LoginPageState extends BaseState<LoginPage, AuthCubit> {
                                 );
                               }
                             },
-                      // isValid: _isButtonEnabled,
-                      // TODO: verde cor botao
-                      style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.resolveWith<Color>((Set<MaterialState> states) {
-                        if (states.contains(MaterialState.disabled)) {
-                          return ColorCustom.verde200;
-                        } else {
-                          return ColorCustom.verde500;
-                        }
-                      })),
+                      style: emailFormFieldValid && passwordFormFieldValid
+                          ? ElevatedButton.styleFrom(
+                              backgroundColor: ColorCustom.verde500,
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)))
+                          : ElevatedButton.styleFrom(
+                              backgroundColor: ColorCustom.verde200,
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
                       child: state is AuthLoadingState
                           ? const CircularProgressIndicator.adaptive()
                           : Text(
@@ -163,7 +176,7 @@ class _LoginPageState extends BaseState<LoginPage, AuthCubit> {
                           style: FontCustom.montserratSemiBold16.copyWith(color: ColorCustom.preto),
                         ),
                         onPressed: () {
-                          Modular.to.pushNamed('/register');
+                          Modular.to.pushNamed('/registerEmail');
                         })
                   ],
                 ),
