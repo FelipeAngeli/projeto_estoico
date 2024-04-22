@@ -1,8 +1,6 @@
 import 'dart:developer';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:projeto_estoico/app/core/exceptions/auth_exception.dart';
 import 'package:projeto_estoico/app/service/auth/auth_service.dart';
 
@@ -16,16 +14,18 @@ class AuthCubit extends Cubit<AuthState> {
   final AuthService _authService;
 
   Future<void> signUp({
-    String? email,
-    String? password,
-    String? name,
+    required String email,
+    required String password,
+    required String name,
+    // File? image,
   }) async {
     emit(AuthLoadingState());
     try {
       final user = await _authService.signUp(
-        email: email ?? '',
-        password: password ?? '',
-        name: name ?? '',
+        email: email,
+        password: password,
+        name: name,
+        // image: image,
       );
       emit(AuthLoadedState(user: user));
     } on AuthException catch (e, s) {

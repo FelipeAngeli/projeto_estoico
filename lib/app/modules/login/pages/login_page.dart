@@ -22,6 +22,7 @@ class _LoginPageState extends BaseState<LoginPage, AuthCubit> {
   final _formKey = GlobalKey<FormState>();
   bool emailFormFieldValid = false;
   bool passwordFormFieldValid = false;
+  bool _passwordVisible = false;
 
   @override
   void dispose() {
@@ -63,7 +64,7 @@ class _LoginPageState extends BaseState<LoginPage, AuthCubit> {
                     const SizedBox(height: 48),
                     Text(
                       "Faça seu login",
-                      style: FontCustom.montserratSemiBold24.copyWith(color: ColorCustom.preto),
+                      style: FontCustom.montserratSemiBold24.copyWith(color: ColorCustom.preto800),
                     ),
                     const SizedBox(height: 48),
                     TextFieldCustom(
@@ -105,6 +106,7 @@ class _LoginPageState extends BaseState<LoginPage, AuthCubit> {
                           });
                         }
                       },
+                      icon: _passwordVisible ? Icons.visibility : Icons.visibility_off,
                       validator: Validatorless.multiple([
                         Validatorless.required('A senha é obrigatória'),
                         Validatorless.min(6, 'A senha deve conter no mínimo 6 caracteres')
@@ -166,14 +168,14 @@ class _LoginPageState extends BaseState<LoginPage, AuthCubit> {
                       },
                       child: Text(
                         "Esqueceu a senha?",
-                        style: FontCustom.montserratSemiBold16.copyWith(color: ColorCustom.preto),
+                        style: FontCustom.montserratSemiBold16.copyWith(color: ColorCustom.preto800),
                       ),
                     ),
                     SizedBox(height: MediaQuery.of(context).size.height * 0.22),
                     TextButton(
                         child: Text(
                           "Não tem conta? Criar",
-                          style: FontCustom.montserratSemiBold16.copyWith(color: ColorCustom.preto),
+                          style: FontCustom.montserratSemiBold16.copyWith(color: ColorCustom.preto800),
                         ),
                         onPressed: () {
                           Modular.to.pushNamed('/registerEmail');
