@@ -27,6 +27,8 @@ class _RegisterEmailPageState extends BaseState<RegisterEmailPage, AuthCubit> {
   bool passwordFormFieldValid = false;
   bool confirmPasswordFormFieldValid = false;
   bool passwordVisible = false;
+  bool get isFormValid =>
+      nameFormFieldValid && emailFormFieldValid && passwordFormFieldValid && confirmPasswordFormFieldValid;
 
   @override
   void dispose() {
@@ -86,7 +88,6 @@ class _RegisterEmailPageState extends BaseState<RegisterEmailPage, AuthCubit> {
                           },
                           validator: Validatorless.multiple([
                             Validatorless.required("Nome obrigatório"),
-                            // Validatorless.min(3,("O email não é valido")),
                           ]),
                           onSaved: (value) {},
                         ),
@@ -109,6 +110,8 @@ class _RegisterEmailPageState extends BaseState<RegisterEmailPage, AuthCubit> {
                           validator: Validatorless.multiple([
                             Validatorless.required("Email obrigatório"),
                             Validatorless.email("O email não é valido"),
+                            Validatorless.regex(
+                                RegExp(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"), "O email não é valido")
                           ]),
                           onSaved: (value) {},
                         ),
@@ -131,7 +134,9 @@ class _RegisterEmailPageState extends BaseState<RegisterEmailPage, AuthCubit> {
                           },
                           validator: Validatorless.multiple([
                             Validatorless.required('A senha é obrigatória'),
-                            Validatorless.min(6, 'A senha deve conter no mínimo 6 caracteres')
+                            Validatorless.min(6, 'A senha deve conter no mínimo 6 caracteres'),
+                            Validatorless.regex(RegExp(r"^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{6,}$"),
+                                "A senha deve conter pelo menos uma letra maiúscula, uma letra minúscula e um número")
                           ]),
                           onSaved: (value) {},
                         ),
@@ -154,7 +159,9 @@ class _RegisterEmailPageState extends BaseState<RegisterEmailPage, AuthCubit> {
                           },
                           validator: Validatorless.multiple([
                             Validatorless.required('A senha é obrigatória'),
-                            Validatorless.min(6, 'A senha deve conter no mínimo 6 caracteres')
+                            Validatorless.min(6, 'A senhxa deve conter no mínimo 6 caracteres'),
+                            Validatorless.regex(RegExp(r"^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{6,}$"),
+                                "A senha deve conter pelo menos uma letra maiúscula, uma letra minúscula e um número")
                           ]),
                           onSaved: (value) {},
                         ),
@@ -163,19 +170,20 @@ class _RegisterEmailPageState extends BaseState<RegisterEmailPage, AuthCubit> {
                           type: CustomButtonType.elevated,
                           width: double.infinity,
                           height: 36,
-                          onPressed: state is AuthLoadingState
+                          onPressed: state is AuthLoadingState || !isFormValid
                               ? null
                               : () {
                                   final validForm = _formKey.currentState?.validate() ?? false;
                                   if (validForm) {
                                     controller.signUp(
-                                        name: _nameController.text,
-                                        email: _emailController.text,
-                                        password: _passwordController.text);
+                                      name: _nameController.text,
+                                      email: _emailController.text,
+                                      password: _passwordController.text,
+                                    );
+                                    Modular.to.pushNamed('/registerFinish');
                                   }
-                                  Modular.to.pushNamed('/registerFinish');
                                 },
-                          style: emailFormFieldValid
+                          style: isFormValid
                               ? ElevatedButton.styleFrom(
                                   backgroundColor: ColorCustom.verde500,
                                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)))
